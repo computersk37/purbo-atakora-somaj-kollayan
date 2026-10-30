@@ -61,17 +61,13 @@ async function startDashboard() {
     return;
   }
 
-  const { data: admin, error: adminError } = await supabaseClient
-    .from("admin_users")
-    .select("user_id")
-    .eq("user_id", sessionData.session.user.id)
-    .maybeSingle();
+  const { data: admin, error: adminError } =
+    await supabaseClient.rpc("is_admin");
 
-  if (adminError || !admin) {
+  if (adminError || admin !== true) {
     message.textContent = "আপনার অ্যাডমিন অনুমতি নেই।";
     return;
   }
-
   logoutBtn.hidden = false;
   await loadApplications();
 }
