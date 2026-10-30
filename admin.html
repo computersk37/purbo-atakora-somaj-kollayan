@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>অ্যাডমিন ড্যাশবোর্ড - পূর্ব আতাকরা সমাজ কল্যাণ</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f1f7f3;
+      color: #18352a;
+      padding: 16px;
+    }
+    .container {
+      max-width: 850px;
+      margin: auto;
+    }
+    h2 { color: #075c3b; text-align: center; }
+    .application {
+      background: white;
+      padding: 18px;
+      border-radius: 10px;
+      margin: 15px 0;
+      box-shadow: 0 2px 10px #0001;
+    }
+    .application p { overflow-wrap: anywhere; }
+    button {
+      border: 0;
+      padding: 10px 15px;
+      margin: 5px 5px 5px 0;
+      border-radius: 6px;
+      color: white;
+      background: #08764b;
+    }
+    .reject { background: #b83232; }
+    .logout { background: #555; }
+    #message { text-align: center; }
+  </style>
+</head>
+<body>
+<div class="container">
+  <h2>অ্যাডমিন ড্যাশবোর্ড</h2>
+  <p id="message">যাচাই করা হচ্ছে...</p>
+  <div id="applications"></div>
+  <button class="logout" id="logoutBtn" hidden>লগআউট</button>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="supabase-config.js"></script>
+<script>
+const message = document.getElementById("message");
+const list = document.getElementById("applications");
+const logoutBtn = document.getElementById("logoutBtn");
+
+async function startDashboard() {
+  const { data: sessionData, error: sessionError } =
+    await supabaseClient.auth.getSession();
+
+  if (sessionError || !sessionData.session) {
+    message.textContent = "প্রথমে অ্যাডমিন হিসেবে লগইন করুন।";
+    return;
+  }
+
+  const { data: admin, error: adminError } = await supabaseClient
+    .from("admin_users")
+    .select("user_id")
+    .eq("user_id", sessionData.session.user.id)
+    .maybeSingle();
+
+  if (adminError || !admin) {
+    message.textContent = "আপনার অ্যাডমিন অনুমতি নেই।";
+    return;
+  }
+
+  logoutBtn.hidden = false;
+  await loadApplications();
+}
+
+async function loadApplications() {
+  message.textContent = "আবেদন লোড হচ্ছে...";
+  list.replaceChildren();
+
+  const { data, error } = await supabaseClient
+    .from("member_applications")
+    .select("*")
+    .order("created_at", { ascending: false });
+
+  if (error) {
+    message.textContent = "আবেদন লোড হয়নি: " + error.message;
+    return;
+  }
+
+  if (!data || data.length === 0) {
+    message.textContent = "এখনো কোনো আবেদন নেই।";
+    return;
+  }
+
+  message.textContent = "মোট আবেদন: " + data.length;
+
+  data.forEach(app => {
+    const card = document.createElement("div");
+    card.className = "application";
+
+    const title = document.createElement("h3");
+    title.textContent = app.full_name;
+
+    const fields = [
+      "ঠিকানা: " + app.address,
+      "মোবাইল: " + app.phone,
+      "বিস্তারিত: " + (app.details || "নেই"),
+      "অবস্থা: " + app.approval_status
+    ];
+
+    card.appendChild(title);
+
+    fields.forEach(value => {
+      const p = document.createElement("p");
+      p.textContent = value;
+      card.appendChild(p);
+    });
+
+    if (app.approval_status === "pending") {
+      const approve = document.createElement("button");
+      approve.textContent = "অনুমোদন";
+      approve.onclick = () => updateStatus(app.id, "approved");
+
+      const reject = document.createElement("button");
+      reject.textContent = "বাতিল";
+      reject.className = "reject";
+      reject.onclick = () => updateStatus(app.id, "rejected");
+
+      card.appendChild(approve);
+      card.appendChild(reject);
+    }
+
+    list.appendChild(card);
+  });
+}
+
+async function updateStatus(id, status) {
+  if (!confirm("আপনি কি আবেদনটি " + status + " করতে চান?")) return;
+
+  const { error } = await supabaseClient
+    .from("member_applications")
+    .update({ approval_status: status })
+    .eq("id", id);
+
+  if (error) {
+    alert("সমস্যা: " + error.message);
+    return;
+  }
+
+  alert("আবেদনের অবস্থা পরিবর্তন হয়েছে।");
+  await loadApplications();
+}
+
+logoutBtn.addEventListener("click", async () => {
+  await supabaseClient.auth.signOut();
+  window.location.href = "login.html";
+});
+
+startDashboard();
+</script>
+</body>
+  </html>
