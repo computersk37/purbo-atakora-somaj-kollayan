@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>সদস্য নিবন্ধন - পূর্ব আতাকরা সমাজ কল্যাণ</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f1f7f3;
+      padding: 20px;
+      color: #18352a;
+    }
+    .form-box {
+      max-width: 480px;
+      margin: 25px auto;
+      background: white;
+      padding: 25px;
+      border-radius: 12px;
+      box-shadow: 0 3px 15px #0001;
+    }
+    h2 { text-align: center; color: #075c3b; }
+    label { display: block; margin-top: 13px; }
+    input, textarea {
+      width: 100%;
+      padding: 12px;
+      margin-top: 6px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      box-sizing: border-box;
+    }
+    button {
+      width: 100%;
+      margin-top: 20px;
+      padding: 13px;
+      background: #075c3b;
+      color: white;
+      border: 0;
+      border-radius: 7px;
+      font-size: 16px;
+    }
+    #message { margin-top: 15px; text-align: center; }
+  </style>
+</head>
+<body>
+<div class="form-box">
+  <h2>সদস্য নিবন্ধন আবেদন</h2>
+  <form id="registerForm">
+    <label>পূর্ণ নাম</label>
+    <input id="name" required>
+
+    <label>ইমেইল</label>
+    <input id="email" type="email" required>
+
+    <label>পাসওয়ার্ড (কমপক্ষে ৬ অক্ষর)</label>
+    <input id="password" type="password" minlength="6" required>
+
+    <label>ঠিকানা</label>
+    <textarea id="address" required></textarea>
+
+    <label>মোবাইল নম্বর</label>
+    <input id="phone" type="tel" required>
+
+    <label>বিস্তারিত (ঐচ্ছিক)</label>
+    <textarea id="details"></textarea>
+
+    <button type="submit">আবেদন জমা দিন</button>
+  </form>
+  <p id="message"></p>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="supabase-config.js"></script>
+<script>
+const form = document.getElementById("registerForm");
+const message = document.getElementById("message");
+
+form.addEventListener("submit", async function(e) {
+  e.preventDefault();
+  message.textContent = "আবেদন জমা হচ্ছে...";
+
+  try {
+    const email = document.getElementById("email").value.trim();
+    const password = document.getElementById("password").value;
+
+    const { data, error } = await supabaseClient.auth.signUp({
+      email: email,
+      password: password
+    });
+
+    if (error) throw error;
+    if (!data.user) throw new Error("অ্যাকাউন্ট তৈরি হয়নি।");
+
+    if (data.session) {
+      const { error: insertError } = await supabaseClient
+        .from("member_applications")
+        .insert({
+          user_id: data.user.id,
+          full_name: document.getElementById("name").value.trim(),
+          address: document.getElementById("address").value.trim(),
+          phone: document.getElementById("phone").value.trim(),
+          details: document.getElementById("details").value.trim(),
+          approval_status: "pending"
+        });
+
+      if (insertError) throw insertError;
+
+      message.textContent = "আপনার আবেদন জমা হয়েছে। অ্যাডমিনের অনুমোদনের অপেক্ষা করুন।";
+      form.reset();
+    } else {
+      message.textContent = "অ্যাকাউন্ট তৈরি হয়েছে। ইমেইল যাচাই করে লগইন করুন, তারপর আবেদন জমা দিতে হবে।";
+    }
+  } catch (error) {
+    message.textContent = "সমস্যা হয়েছে: " + error.message;
+  }
+});
+</script>
+</body>
+  </html>
