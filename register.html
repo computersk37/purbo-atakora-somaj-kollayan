@@ -45,6 +45,7 @@
 <body>
 <div class="form-box">
   <h2>সদস্য নিবন্ধন আবেদন</h2>
+
   <form id="registerForm">
     <label>পূর্ণ নাম</label>
     <input id="name" required>
@@ -66,6 +67,7 @@
 
     <button type="submit">আবেদন জমা দিন</button>
   </form>
+
   <p id="message"></p>
 </div>
 
@@ -75,45 +77,80 @@
 const form = document.getElementById("registerForm");
 const message = document.getElementById("message");
 
+async function submitApplication(user, draft) {
+  const { error } = await supabaseClient
+    .from("member_applications")
+    .insert({
+      user_id: user.id,
+      full_name: draft.full_name,
+      address: draft.address,
+      phone: draft.phone,
+      details: draft.details,
+      approval_status: "pending"
+    });
+
+  if (error) throw error;
+
+  localStorage.removeItem("pending_member_application");
+  message.textContent =
+    "আপনার আবেদন সফলভাবে জমা হয়েছে। অ্যাডমিনের অনুমোদনের অপেক্ষা করুন।";
+  form.reset();
+}
+
 form.addEventListener("submit", async function(e) {
   e.preventDefault();
-  message.textContent = "আবেদন জমা হচ্ছে...";
+  message.textContent = "অ্যাকাউন্ট তৈরি হচ্ছে...";
+
+  const draft = {
+    full_name: document.getElementById("name").value.trim(),
+    address: document.getElementById("address").value.trim(),
+    phone: document.getElementById("phone").value.trim(),
+    details: document.getElementById("details").value.trim()
+  };
 
   try {
-    const email = document.getElementById("email").value.trim();
-    const password = document.getElementById("password").value;
-
     const { data, error } = await supabaseClient.auth.signUp({
-      email: email,
-      password: password
+      email: document.getElementById("email").value.trim(),
+      password: document.getElementById("password").value,
+      options: {
+        emailRedirectTo: window.location.href
+      }
     });
 
     if (error) throw error;
-    if (!data.user) throw new Error("অ্যাকাউন্ট তৈরি হয়নি।");
+
+    localStorage.setItem(
+      "pending_member_application",
+      JSON.stringify(draft)
+    );
 
     if (data.session) {
-      const { error: insertError } = await supabaseClient
-        .from("member_applications")
-        .insert({
-          user_id: data.user.id,
-          full_name: document.getElementById("name").value.trim(),
-          address: document.getElementById("address").value.trim(),
-          phone: document.getElementById("phone").value.trim(),
-          details: document.getElementById("details").value.trim(),
-          approval_status: "pending"
-        });
-
-      if (insertError) throw insertError;
-
-      message.textContent = "আপনার আবেদন জমা হয়েছে। অ্যাডমিনের অনুমোদনের অপেক্ষা করুন।";
-      form.reset();
+      await submitApplication(data.user, draft);
     } else {
-      message.textContent = "অ্যাকাউন্ট তৈরি হয়েছে। ইমেইল যাচাই করে লগইন করুন, তারপর আবেদন জমা দিতে হবে।";
+      message.textContent =
+        "অ্যাকাউন্ট তৈরি হয়েছে। ইমেইলে পাঠানো লিংকে চাপ দিয়ে যাচাই সম্পন্ন করুন। এরপর এই নিবন্ধন পেজে ফিরে আসুন।";
+      form.reset();
     }
   } catch (error) {
     message.textContent = "সমস্যা হয়েছে: " + error.message;
   }
 });
+
+(async function checkVerifiedUser() {
+  try {
+    const { data } = await supabaseClient.auth.getSession();
+    const saved = localStorage.getItem("pending_member_application");
+
+    if (data.session && saved) {
+      await submitApplication(
+        data.session.user,
+        JSON.parse(saved)
+      );
+    }
+  } catch (error) {
+    message.textContent = "সমস্যা হয়েছে: " + error.message;
+  }
+})();
 </script>
 </body>
-  </html>
+</html>
