@@ -155,7 +155,12 @@ logoutBtn.addEventListener("click", async () => {
   window.location.href = "login.html";
 });
 
-startDashboard();
+startDashboard().catch((error) => {
+  const message = document.getElementById("message");
+  if (message) {
+    message.textContent = "ত্রুটি: " + error.message;
+  }
+});
 </script>
 </body>
   </html>
