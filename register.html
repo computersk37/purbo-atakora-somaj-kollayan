@@ -64,7 +64,8 @@
 
     <label>বিস্তারিত (ঐচ্ছিক)</label>
     <textarea id="details"></textarea>
-
+<label>প্রোফাইল ছবি (ঐচ্ছিক)</label>
+<input type="file" id="photo" accept="image/*">
     <button type="submit">আবেদন জমা দিন</button>
   </form>
 
@@ -73,11 +74,38 @@
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="supabase-config.js"></script>
-<script>
+ <script>
 const form = document.getElementById("registerForm");
 const message = document.getElementById("message");
 
-async function submitApplication(user, draft) {
+async function submitApplication(user, draft, photoFile = null) {
+  let photoPath = null;
+
+  if (photoFile) {
+    if (!photoFile.type.startsWith("image/")) {
+      throw new Error("শুধু ছবির ফাইল নির্বাচন করুন।");
+    }
+
+    if (photoFile.size > 2 * 1024 * 1024) {
+      throw new Error("ছবির সাইজ ২ MB-এর কম হতে হবে।");
+    }
+
+    const fileName =
+      `${user.id}/${Date.now()}-${photoFile.name}`;
+
+    const { error: uploadError } = await supabaseClient
+      .storage
+      .from("member-photos")
+      .upload(fileName, photoFile, {
+        contentType: photoFile.type,
+        upsert: false
+      });
+
+    if (uploadError) throw uploadError;
+
+    photoPath = fileName;
+  }
+
   const { error } = await supabaseClient
     .from("member_applications")
     .insert({
@@ -86,20 +114,25 @@ async function submitApplication(user, draft) {
       address: draft.address,
       phone: draft.phone,
       details: draft.details,
+      photo_url: photoPath,
       approval_status: "pending"
     });
 
   if (error) throw error;
 
   localStorage.removeItem("pending_member_application");
+  localStorage.removeItem("pending_member_email");
+
   message.textContent =
     "আপনার আবেদন সফলভাবে জমা হয়েছে। অ্যাডমিনের অনুমোদনের অপেক্ষা করুন।";
+
   form.reset();
 }
 
 form.addEventListener("submit", async function(e) {
   e.preventDefault();
-  message.textContent = "অ্যাকাউন্ট তৈরি হচ্ছে...";
+
+  message.textContent = "আবেদন প্রক্রিয়া চলছে...";
 
   const draft = {
     full_name: document.getElementById("name").value.trim(),
@@ -108,7 +141,29 @@ form.addEventListener("submit", async function(e) {
     details: document.getElementById("details").value.trim()
   };
 
+  const photoFile =
+    document.getElementById("photo").files[0] || null;
+
   try {
+    const { data: sessionData, error: sessionError } =
+      await supabaseClient.auth.getSession();
+
+    if (sessionError) throw sessionError;
+
+    const saved =
+      localStorage.getItem("pending_member_application");
+
+    // ইমেইল যাচাইয়ের পর আগের অ্যাকাউন্ট দিয়ে আবেদন জমা
+    if (sessionData.session && saved) {
+      await submitApplication(
+        sessionData.session.user,
+        draft,
+        photoFile
+      );
+      return;
+    }
+
+    // নতুন অ্যাকাউন্ট তৈরি
     const { data, error } = await supabaseClient.auth.signUp({
       email: document.getElementById("email").value.trim(),
       password: document.getElementById("password").value,
@@ -124,29 +179,58 @@ form.addEventListener("submit", async function(e) {
       JSON.stringify(draft)
     );
 
+    localStorage.setItem(
+      "pending_member_email",
+      document.getElementById("email").value.trim()
+    );
+
     if (data.session) {
-      await submitApplication(data.user, draft);
+      await submitApplication(data.user, draft, photoFile);
     } else {
       message.textContent =
-        "অ্যাকাউন্ট তৈরি হয়েছে। ইমেইলে পাঠানো লিংকে চাপ দিয়ে যাচাই সম্পন্ন করুন। এরপর এই নিবন্ধন পেজে ফিরে আসুন।";
-      form.reset();
+        "অ্যাকাউন্ট তৈরি হয়েছে। ইমেইলে পাঠানো লিংকে চাপ দিয়ে যাচাই করুন। এরপর এই পেজে ফিরে এসে ছবি নির্বাচন করে আবেদন জমা দিন।";
     }
+
   } catch (error) {
     message.textContent = "সমস্যা হয়েছে: " + error.message;
   }
 });
 
+// ইমেইল যাচাইয়ের পর আগের তথ্য ফর্মে ফিরিয়ে আনা
 (async function checkVerifiedUser() {
   try {
-    const { data } = await supabaseClient.auth.getSession();
-    const saved = localStorage.getItem("pending_member_application");
+    const { data, error } =
+      await supabaseClient.auth.getSession();
+
+    if (error) throw error;
+
+    const saved =
+      localStorage.getItem("pending_member_application");
 
     if (data.session && saved) {
-      await submitApplication(
-        data.session.user,
-        JSON.parse(saved)
-      );
+      const draft = JSON.parse(saved);
+
+      document.getElementById("name").value =
+        draft.full_name || "";
+
+      document.getElementById("address").value =
+        draft.address || "";
+
+      document.getElementById("phone").value =
+        draft.phone || "";
+
+      document.getElementById("details").value =
+        draft.details || "";
+
+      document.getElementById("email").value =
+        localStorage.getItem("pending_member_email") || "";
+
+      document.getElementById("password").required = false;
+
+      message.textContent =
+        "ইমেইল যাচাই হয়েছে। এবার প্রোফাইল ছবি নির্বাচন করে আবেদন জমা দিন।";
     }
+
   } catch (error) {
     message.textContent = "সমস্যা হয়েছে: " + error.message;
   }
