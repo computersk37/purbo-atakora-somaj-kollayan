@@ -183,7 +183,8 @@ if (member.photo_url) {
     allMembers = data || [];
     showMembers(allMembers);
   }
-
+document.getElementById("totalMembers").textContent =
+  "মোট সদস্য: " + allMembers.length + " জন";
   search.addEventListener("input", function () {
     const term = search.value.trim().toLowerCase();
 
