@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>সদস্য তালিকা - পূর্ব আতাকরা সমাজ কল্যাণ</title>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f3f6f4;
+      margin: 0;
+      padding: 20px;
+      color: #222;
+    }
+
+    .container {
+      max-width: 850px;
+      margin: auto;
+      background: white;
+      padding: 20px;
+      border-radius: 12px;
+    }
+
+    h2 {
+      color: #176b42;
+      text-align: center;
+    }
+
+    input {
+      width: 100%;
+      padding: 13px;
+      box-sizing: border-box;
+      border: 1px solid #ccc;
+      border-radius: 7px;
+      margin: 15px 0;
+      font-size: 16px;
+    }
+
+    .member {
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 15px;
+      margin: 12px 0;
+      overflow-wrap: anywhere;
+    }
+
+    .member h3 {
+      color: #176b42;
+      margin-top: 0;
+    }
+
+    .member p {
+      line-height: 1.6;
+    }
+
+    button {
+      background: #176b42;
+      color: white;
+      border: none;
+      padding: 11px 18px;
+      border-radius: 7px;
+      cursor: pointer;
+      font-size: 15px;
+    }
+
+    #message {
+      text-align: center;
+      margin: 15px 0;
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="container">
+
+  <h2>সদস্য তালিকা</h2>
+  <p style="text-align:center;">পূর্ব আতাকরা সমাজ কল্যাণ</p>
+
+  <input
+    type="search"
+    id="search"
+    placeholder="সদস্যের নাম দিয়ে খুঁজুন..."
+  >
+
+  <div id="message">সদস্যদের তথ্য লোড হচ্ছে...</div>
+  <div id="memberList"></div>
+
+  <button id="logout">লগআউট</button>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="supabase-config.js"></script>
+
+<script>
+  const message = document.getElementById("message");
+  const memberList = document.getElementById("memberList");
+  const search = document.getElementById("search");
+
+  let allMembers = [];
+
+  function showMembers(list) {
+    memberList.replaceChildren();
+
+    if (list.length === 0) {
+      message.textContent = "কোনো সদস্য পাওয়া যায়নি।";
+      return;
+    }
+
+    message.textContent = "মোট সদস্য: " + list.length;
+
+    list.forEach(member => {
+      const card = document.createElement("div");
+      card.className = "member";
+
+      const name = document.createElement("h3");
+      name.textContent = member.full_name || "নাম নেই";
+
+      const address = document.createElement("p");
+      address.textContent = "ঠিকানা: " + (member.address || "");
+
+      const phone = document.createElement("p");
+      phone.textContent = "মোবাইল: " + (member.phone || "");
+
+      const details = document.createElement("p");
+      details.textContent = "বিস্তারিত: " + (member.details || "নেই");
+
+      card.append(name, address, phone, details);
+      memberList.appendChild(card);
+    });
+  }
+
+  async function startDashboard() {
+    const { data: sessionData, error: sessionError } =
+      await supabaseClient.auth.getSession();
+
+    if (sessionError || !sessionData.session) {
+      window.location.href = "login.html";
+      return;
+    }
+
+    const { data: admin, error: adminError } =
+      await supabaseClient.rpc("is_admin");
+
+    if (adminError || admin !== true) {
+      message.textContent = "আপনার অ্যাডমিন অনুমতি নেই।";
+      return;
+    }
+
+    const { data, error } = await supabaseClient
+      .from("members")
+      .select("full_name, address, phone, details")
+      .eq("approval_status", "approved")
+      .order("created_at", { ascending: false });
+
+    if (error) {
+      message.textContent = "তথ্য লোড হয়নি: " + error.message;
+      return;
+    }
+
+    allMembers = data || [];
+    showMembers(allMembers);
+  }
+
+  search.addEventListener("input", function () {
+    const term = search.value.trim().toLowerCase();
+
+    const filtered = allMembers.filter(member =>
+      (member.full_name || "").toLowerCase().includes(term)
+    );
+
+    showMembers(filtered);
+  });
+
+  document.getElementById("logout").addEventListener("click", async () => {
+    await supabaseClient.auth.signOut();
+    window.location.href = "login.html";
+  });
+
+  startDashboard().catch(error => {
+    message.textContent = "ত্রুটি: " + error.message;
+  });
+</script>
+
+</body>
+  </html>
