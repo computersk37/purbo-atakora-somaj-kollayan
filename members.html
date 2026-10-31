@@ -111,7 +111,7 @@
 
     message.textContent = "মোট সদস্য: " + list.length;
 
-    list.forEach(member => {
+    list.forEach(async member => {
       const card = document.createElement("div");
       card.className = "member";
 if (member.photo_url) {
