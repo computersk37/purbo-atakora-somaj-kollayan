@@ -174,7 +174,16 @@
     showMembers(filtered);
   });
 
-  document.getElementById("logout").addEventListener("click", async () => {
+  document.getElementById<a href="index.html" style="
+  display:inline-block;
+  background:#087f5b;
+  color:white;
+  padding:12px 22px;
+  border-radius:8px;
+  text-decoration:none;
+  margin-right:10px;">
+  হোমে ফিরে যান
+</a>("logout").addEventListener("click", async () => {
     await supabaseClient.auth.signOut();
     window.location.href = "login.html";
   });
