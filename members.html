@@ -178,15 +178,21 @@
   await supabaseClient.auth.signOut();
   window.location.href = "login.html";
 });
-</a>("logout").addEventListener("click", async () => {
-    await supabaseClient.auth.signOut();
-    window.location.href = "login.html";
-  });
+
 
   startDashboard().catch(error => {
     message.textContent = "ত্রুটি: " + error.message;
   });
-</script>
+</script><a href="index.html" style="
+display:inline-block;
+background:#087f5b;
+color:white;
+padding:12px 22px;
+border-radius:8px;
+text-decoration:none;
+margin:10px;">
+হোমে ফিরে যান
+</a>
 
 </body>
   </html>
