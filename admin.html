@@ -85,7 +85,7 @@ async function loadApprovedMembers() {
 
   const { data, error } = await supabaseClient
     .from("members")
-    .select("id, full_name, address, phone, details")
+    .select("id, full_name, address, phone, details, photo_url")
     .eq("approval_status", "approved")
     .order("created_at", { ascending: false });
 
