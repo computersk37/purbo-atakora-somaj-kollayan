@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>আমার প্রোফাইল - পূর্ব আতাকরা সমাজ কল্যাণ</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f3f6f4;
+      margin: 0;
+      padding: 20px;
+    }
+    .profile {
+      max-width: 500px;
+      margin: 25px auto;
+      background: white;
+      padding: 22px;
+      border-radius: 12px;
+      box-shadow: 0 2px 12px #0001;
+    }
+    h2 { text-align: center; color: #176b3a; }
+    .photo {
+      width: 120px;
+      height: 120px;
+      object-fit: cover;
+      border-radius: 50%;
+      display: block;
+      margin: 15px auto;
+    }
+    .info {
+      padding: 11px;
+      margin: 8px 0;
+      background: #f3f6f4;
+      border-radius: 7px;
+      overflow-wrap: anywhere;
+    }
+    button {
+      width: 100%;
+      padding: 12px;
+      margin-top: 12px;
+      border: 0;
+      border-radius: 7px;
+      background: #176b3a;
+      color: white;
+      font-size: 16px;
+    }
+    #message { text-align: center; }
+  </style>
+</head>
+<body>
+
+<div class="profile">
+  <h2>আমার প্রোফাইল</h2>
+  <p id="message">তথ্য লোড হচ্ছে...</p>
+  <div id="profileInfo"></div>
+  <button id="logoutBtn" hidden>লগআউট</button>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="supabase-config.js"></script>
+
+<script>
+const supabaseClient = window.supabase.createClient(
+  SUPABASE_URL,
+  SUPABASE_ANON_KEY
+);
+
+async function loadProfile() {
+  const message = document.getElementById("message");
+  const profileInfo = document.getElementById("profileInfo");
+
+  const { data: authData, error: authError } =
+    await supabaseClient.auth.getUser();
+
+  if (authError || !authData.user) {
+    window.location.href = "login.html";
+    return;
+  }
+
+  const { data, error } = await supabaseClient
+    .from("member_applications")
+    .select("full_name, address, phone, details, photo_url, approval_status")
+    .eq("user_id", authData.user.id)
+    .maybeSingle();
+
+  if (error) {
+    message.textContent = "তথ্য লোড হয়নি: " + error.message;
+    return;
+  }
+
+  if (!data) {
+    message.textContent = "আপনার নিবন্ধনের তথ্য পাওয়া যায়নি।";
+    return;
+  }
+
+  message.textContent = "";
+
+  if (data.photo_url) {
+    const { data: photoData } = await supabaseClient.storage
+      .from("member-photos")
+      .createSignedUrl(data.photo_url, 3600);
+
+    if (photoData?.signedUrl) {
+      const photo = document.createElement("img");
+      photo.src = photoData.signedUrl;
+      photo.className = "photo";
+      photo.alt = "প্রোফাইল ছবি";
+      profileInfo.appendChild(photo);
+    }
+  }
+
+  const statusNames = {
+    pending: "অনুমোদনের অপেক্ষায়",
+    approved: "অনুমোদিত",
+    rejected: "প্রত্যাখ্যাত"
+  };
+
+  const fields = [
+    ["নাম", data.full_name],
+    ["ঠিকানা", data.address],
+    ["মোবাইল নম্বর", data.phone],
+    ["বিস্তারিত", data.details],
+    ["আবেদনের অবস্থা", statusNames[data.approval_status] || data.approval_status]
+  ];
+
+  fields.forEach(([label, value]) => {
+    const div = document.createElement("div");
+    div.className = "info";
+    div.textContent = label + ": " + (value || "দেওয়া হয়নি");
+    profileInfo.appendChild(div);
+  });
+
+  document.getElementById("logoutBtn").hidden = false;
+}
+
+document.getElementById("logoutBtn").onclick = async () => {
+  await supabaseClient.auth.signOut();
+  window.location.href = "login.html";
+};
+
+loadProfile();
+</script>
+
+</body>
+</html>
