@@ -78,7 +78,19 @@
         return;
       }
 
-      window.location.href = "profile.html";
+      const { data: isAdmin, error: roleError } =
+  await supabaseClient.rpc("is_admin");
+
+if (roleError) {
+  message.textContent = "পরিচয় যাচাই সমস্যা: " + roleError.message;
+  return;
+}
+
+if (isAdmin) {
+  window.location.href = "admin.html";
+} else {
+  window.location.href = "profile.html";
+}
     });
   </script>
 </body>
