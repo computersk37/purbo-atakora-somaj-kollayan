@@ -152,6 +152,70 @@ card.appendChild(photoInput);
     save.textContent = "তথ্য সংরক্ষণ";
 
     save.onclick = async () => {
+  const updateData = {
+    full_name: name.value.trim(),
+    address: address.value.trim(),
+    phone: phone.value.trim(),
+    details: details.value.trim()
+  };
+
+  const selectedPhoto = photoInput.files[0];
+
+  if (selectedPhoto) {
+    if (!selectedPhoto.type.startsWith("image/")) {
+      alert("শুধু ছবির ফাইল নির্বাচন করুন।");
+      return;
+    }
+
+    if (selectedPhoto.size > 2 * 1024 * 1024) {
+      alert("ছবির সাইজ ২ MB-এর কম হতে হবে।");
+      return;
+    }
+
+    const { data: userData, error: userError } =
+      await supabaseClient.auth.getUser();
+
+    if (userError || !userData.user) {
+      alert("অ্যাডমিন লগইন যাচাই করা যায়নি।");
+      return;
+    }
+
+    const safeName = selectedPhoto.name.replace(
+      /[^a-zA-Z0-9._-]/g,
+      "_"
+    );
+
+    const newPhotoPath =
+      `${userData.user.id}/${Date.now()}-${safeName}`;
+
+    const { error: uploadError } = await supabaseClient.storage
+      .from("member-photos")
+      .upload(newPhotoPath, selectedPhoto, {
+        contentType: selectedPhoto.type,
+        upsert: false
+      });
+
+    if (uploadError) {
+      alert("ছবি আপলোড হয়নি: " + uploadError.message);
+      return;
+    }
+
+    updateData.photo_url = newPhotoPath;
+  }
+
+  const { error } = await supabaseClient
+    .from("members")
+    .update(updateData)
+    .eq("id", member.id);
+
+  if (error) {
+    alert("তথ্য সংরক্ষণ হয়নি: " + error.message);
+    return;
+  }
+
+  alert("সদস্যের তথ্য ও ছবি সফলভাবে সংরক্ষিত হয়েছে।");
+  await loadApprovedMembers();
+}; {
       const { error } = await supabaseClient
         .from("members")
         .update({
