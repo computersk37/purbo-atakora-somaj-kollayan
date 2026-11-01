@@ -76,9 +76,81 @@ async function startDashboard() {
     return;
   }
   logoutBtn.hidden = false;
-  await loadApplications();
+await loadApplications();
+await loadApprovedMembers();
 }
+async function loadApprovedMembers() {
+  const approvedList = document.getElementById("approvedMembers");
+  approvedList.textContent = "সদস্যদের তথ্য লোড হচ্ছে...";
 
+  const { data, error } = await supabaseClient
+    .from("members")
+    .select("id, full_name, address, phone, details")
+    .eq("approval_status", "approved")
+    .order("created_at", { ascending: false });
+
+  if (error) {
+    approvedList.textContent = "তথ্য লোড হয়নি: " + error.message;
+    return;
+  }
+
+  approvedList.replaceChildren();
+
+  if (!data || data.length === 0) {
+    approvedList.textContent = "কোনো অনুমোদিত সদস্য নেই।";
+    return;
+  }
+
+  data.forEach(member => {
+    const card = document.createElement("div");
+    card.className = "application";
+
+    const title = document.createElement("h3");
+    title.textContent = member.full_name;
+
+    const name = document.createElement("input");
+    name.value = member.full_name || "";
+    name.placeholder = "সদস্যের নাম";
+
+    const address = document.createElement("input");
+    address.value = member.address || "";
+    address.placeholder = "ঠিকানা";
+
+    const phone = document.createElement("input");
+    phone.value = member.phone || "";
+    phone.placeholder = "মোবাইল নম্বর";
+
+    const details = document.createElement("textarea");
+    details.value = member.details || "";
+    details.placeholder = "বিস্তারিত তথ্য";
+
+    const save = document.createElement("button");
+    save.textContent = "তথ্য সংরক্ষণ";
+
+    save.onclick = async () => {
+      const { error } = await supabaseClient
+        .from("members")
+        .update({
+          full_name: name.value.trim(),
+          address: address.value.trim(),
+          phone: phone.value.trim(),
+          details: details.value.trim()
+        })
+        .eq("id", member.id);
+
+      if (error) {
+        alert("সমস্যা: " + error.message);
+        return;
+      }
+
+      alert("সদস্যের তথ্য সফলভাবে সংরক্ষিত হয়েছে।");
+      await loadApprovedMembers();
+    };
+
+    card.append(title, name, address, phone, details, save);
+    approvedList.appendChild(card);
+  });
+  }
 async function loadApplications() {
   message.textContent = "আবেদন লোড হচ্ছে...";
   list.replaceChildren();
