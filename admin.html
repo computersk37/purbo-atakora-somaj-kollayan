@@ -122,7 +122,13 @@ if (member.photo_url) {
     photo.style.marginBottom = "12px";
     card.appendChild(photo);
   }
-      }
+      }const photoInput = document.createElement("input");
+photoInput.type = "file";
+photoInput.accept = "image/*";
+photoInput.style.display = "block";
+photoInput.style.marginBottom = "12px";
+
+card.appendChild(photoInput);
     const title = document.createElement("h3");
     title.textContent = member.full_name;
 
