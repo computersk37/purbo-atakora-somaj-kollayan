@@ -95,6 +95,25 @@ if (isAdmin) {
   window.location.href = "profile.html";
 }
     });
-  </script>
+document.getElementById("forgotPassword").onclick = async () => {
+  const email = document.getElementById("email").value.trim();
+
+  if (!email) {
+    message.textContent = "প্রথমে আপনার Gmail লিখুন।";
+    return;
+  }
+
+  const { error } = await supabaseClient.auth
+    .resetPasswordForEmail(email, {
+      redirectTo: "https://computersk37.github.io/purbo-atakora-somaj-kollayan/reset-password.html"
+    });
+
+  if (error) {
+    message.textContent = "সমস্যা: " + error.message;
+    return;
+  }
+
+  message.textContent = "Gmail-এ পাসওয়ার্ড পরিবর্তনের লিংক পাঠানো হয়েছে।";
+};  </script>
 </body>
 </html>
