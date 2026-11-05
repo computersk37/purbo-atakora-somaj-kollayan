@@ -74,7 +74,7 @@ async function loadProfile() {
     window.location.href = "login.html";
     return;
   }
-message.textContent = "লগইন তথ্য যাচাই হচ্ছে...";
+
   const { data, error } = await supabaseClient
     .from("member_applications")
     .select("full_name, address, phone, details, photo_url, approval_status")
