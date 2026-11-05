@@ -177,6 +177,33 @@ document.getElementById("editProfileBtn").addEventListener("click", () => {
 document.getElementById("cancelEditBtn").addEventListener("click", () => {
   document.getElementById("editProfileForm").hidden = true;
 });
+  document.getElementById("submitEditRequestBtn").addEventListener("click", async () => {
+  const { data: authData } = await supabaseClient.auth.getUser();
+
+  if (!authData.user) {
+    alert("প্রথমে লগইন করুন।");
+    return;
+  }
+
+  const { error } = await supabaseClient
+    .from("member_edit_requests")
+    .insert({
+      user_id: authData.user.id,
+      full_name: document.getElementById("editFullName").value.trim(),
+      address: document.getElementById("editAddress").value.trim(),
+      phone: document.getElementById("editPhone").value.trim(),
+      details: document.getElementById("editDetails").value.trim(),
+      status: "pending"
+    });
+
+  if (error) {
+    alert("আবেদন জমা হয়নি: " + error.message);
+    return;
+  }
+
+  alert("আপনার পরিবর্তনের আবেদন জমা হয়েছে। অ্যাডমিনের অনুমোদনের অপেক্ষা করুন।");
+  document.getElementById("editProfileForm").hidden = true;
+});
 loadProfile();
 </script>
 
