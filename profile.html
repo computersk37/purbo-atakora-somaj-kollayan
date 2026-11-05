@@ -135,7 +135,7 @@ document.getElementById("logoutBtn").onclick = async () => {
   await supabaseClient.auth.signOut();
   window.location.href = "login.html";
 };
-
+document.getElementById("message").textContent = "প্রোফাইল JavaScript চালু হয়েছে!";
 loadProfile();
 </script>
 
