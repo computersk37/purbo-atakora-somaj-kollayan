@@ -228,9 +228,11 @@ card.appendChild(photoInput);
       
 
     card.append(title, name, address, phone, details, save);
-    approvedList.appendChild(card);
-  });
-  async function loadEditRequests() {
+      approvedList.appendChild(card);
+});
+}
+
+async function loadEditRequests() {
   const editList = document.getElementById("editRequests");
   editList.textContent = "পরিবর্তনের আবেদন লোড হচ্ছে...";
 
