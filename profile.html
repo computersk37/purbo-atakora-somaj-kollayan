@@ -163,7 +163,20 @@ document.getElementById("logoutBtn").onclick = async () => {
   await supabaseClient.auth.signOut();
   window.location.href = "login.html";
 };
+document.getElementById("editProfileBtn").addEventListener("click", () => {
+  if (!currentProfile) return;
 
+  document.getElementById("editFullName").value = currentProfile.full_name || "";
+  document.getElementById("editAddress").value = currentProfile.address || "";
+  document.getElementById("editPhone").value = currentProfile.phone || "";
+  document.getElementById("editDetails").value = currentProfile.details || "";
+
+  document.getElementById("editProfileForm").hidden = false;
+});
+
+document.getElementById("cancelEditBtn").addEventListener("click", () => {
+  document.getElementById("editProfileForm").hidden = true;
+});
 loadProfile();
 </script>
 
