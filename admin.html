@@ -228,6 +228,80 @@ card.appendChild(photoInput);
     card.append(title, name, address, phone, details, save);
     approvedList.appendChild(card);
   });
+  async function loadEditRequests() {
+  const editList = document.getElementById("editRequests");
+  editList.textContent = "পরিবর্তনের আবেদন লোড হচ্ছে...";
+
+  const { data, error } = await supabaseClient
+    .from("member_edit_requests")
+    .select("*")
+    .order("created_at", { ascending: false });
+
+  if (error) {
+    editList.textContent = "আবেদন লোড হয়নি: " + error.message;
+    return;
+  }
+
+  editList.replaceChildren();
+
+  if (!data || data.length === 0) {
+    editList.textContent = "কোনো পরিবর্তনের আবেদন নেই।";
+    return;
+  }
+
+  data.forEach(request => {
+    const card = document.createElement("div");
+    card.className = "application";
+
+    const title = document.createElement("h3");
+    title.textContent = request.full_name;
+
+    const info = document.createElement("p");
+    info.textContent =
+      "ঠিকানা: " + request.address +
+      " | মোবাইল: " + request.phone +
+      " | বিস্তারিত: " + (request.details || "নেই") +
+      " | অবস্থা: " + request.status;
+
+    card.append(title, info);
+
+    if (request.status === "pending") {
+      const approve = document.createElement("button");
+      approve.textContent = "অনুমোদন";
+      approve.onclick = () =>
+        updateEditRequestStatus(request.id, "approved");
+
+      const reject = document.createElement("button");
+      reject.textContent = "বাতিল";
+      reject.className = "reject";
+      reject.onclick = () =>
+        updateEditRequestStatus(request.id, "rejected");
+
+      card.append(approve, reject);
+    }
+
+    editList.appendChild(card);
+  });
+}
+
+async function updateEditRequestStatus(id, status) {
+  if (!confirm("আপনি কি এই পরিবর্তনের আবেদনটি " + status + " করতে চান?")) {
+    return;
+  }
+
+  const { error } = await supabaseClient
+    .from("member_edit_requests")
+    .update({ status: status })
+    .eq("id", id);
+
+  if (error) {
+    alert("সমস্যা: " + error.message);
+    return;
+  }
+
+  alert("পরিবর্তনের আবেদন আপডেট হয়েছে।");
+  await loadEditRequests();
+  await loadApprovedMembers();
   }
 async function loadApplications() {
   message.textContent = "আবেদন লোড হচ্ছে...";
