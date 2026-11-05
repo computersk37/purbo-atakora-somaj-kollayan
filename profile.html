@@ -113,7 +113,7 @@ async function loadProfile() {
     message.textContent = "তথ্য লোড হয়নি: " + error.message;
     return;
   }
-
+currentProfile = data;
   if (!data) {
     message.textContent = "আপনার নিবন্ধনের তথ্য পাওয়া যায়নি।";
     return;
