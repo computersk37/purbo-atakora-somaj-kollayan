@@ -84,8 +84,8 @@ async function startDashboard() {
   }
   logoutBtn.hidden = false;
 await loadApplications();
+await loadEditRequests();
 await loadApprovedMembers();
-}
 async function loadApprovedMembers() {
   const approvedList = document.getElementById("approvedMembers");
   approvedList.textContent = "সদস্যদের তথ্য লোড হচ্ছে...";
