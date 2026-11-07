@@ -158,7 +158,40 @@ currentProfile = data;
 
   document.getElementById("logoutBtn").hidden = false;
 }
+async function loadEditRequestStatus() {
+  const statusBox = document.getElementById("editRequestStatus");
 
+  const { data: authData } = await supabaseClient.auth.getUser();
+
+  if (!authData.user) return;
+
+  const { data, error } = await supabaseClient
+    .from("member_edit_requests")
+    .select("status, created_at")
+    .eq("user_id", authData.user.id)
+    .order("created_at", { ascending: false })
+    .limit(1);
+
+  if (error) {
+    statusBox.textContent = "আবেদনের অবস্থা লোড হয়নি।";
+    return;
+  }
+
+  if (!data || data.length === 0) {
+    statusBox.textContent = "আপনার কোনো পরিবর্তনের আবেদন নেই।";
+    return;
+  }
+
+  const names = {
+    pending: "অনুমোদনের অপেক্ষায়",
+    approved: "অনুমোদিত",
+    rejected: "প্রত্যাখ্যাত"
+  };
+
+  statusBox.textContent =
+    "সর্বশেষ পরিবর্তনের আবেদনের অবস্থা: " +
+    (names[data[0].status] || data[0].status);
+    }
 document.getElementById("logoutBtn").onclick = async () => {
   await supabaseClient.auth.signOut();
   window.location.href = "login.html";
