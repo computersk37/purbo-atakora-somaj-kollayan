@@ -107,7 +107,9 @@ async function loadProfile() {
     .from("member_applications")
     .select("full_name, address, phone, details, photo_url, approval_status")
     .eq("user_id", authData.user.id)
-    .maybeSingle();
+.order("created_at", { ascending: false })
+.limit(1)
+.maybeSingle();
 
   if (error) {
     message.textContent = "তথ্য লোড হয়নি: " + error.message;
