@@ -166,7 +166,7 @@ async function loadEditRequestStatus() {
   const { data: authData } = await supabaseClient.auth.getUser();
 
   if (!authData.user) return;
-
+statusBox.textContent = "লগইন অ্যাকাউন্ট: " + authData.user.email;
   const { data, error } = await supabaseClient
     .from("member_edit_requests")
     .select("status, created_at")
