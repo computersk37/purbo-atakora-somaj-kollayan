@@ -132,7 +132,7 @@ async function loadPosts() {
   for (const post of data) {
     const box = document.createElement("div");
     box.className = "post";
-
+box.id = "post-" + post.id;
     const content = document.createElement("p");
     content.textContent = post.content;
     box.appendChild(content);
