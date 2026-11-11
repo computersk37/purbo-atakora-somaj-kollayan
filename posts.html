@@ -138,18 +138,36 @@ async function loadPosts() {
     box.appendChild(content);
 
     if (post.image_url) {
-      const { data: imageData, error: imageError } =
-        await supabaseClient.storage
-          .from("post-images")
-          .createSignedUrl(post.image_url, 3600);
+  const { data: imageData, error: imageError } =
+    await supabaseClient.storage
+      .from("post-images")
+      .createSignedUrl(post.image_url, 3600, {
+        download: true
+      });
 
-      if (!imageError && imageData?.signedUrl) {
-        const img = document.createElement("img");
-        img.src = imageData.signedUrl;
-        img.alt = "পোস্টের ছবি";
-        box.appendChild(img);
-      }
-    }
+  if (!imageError && imageData?.signedUrl) {
+    const img = document.createElement("img");
+    img.src = imageData.signedUrl;
+    img.alt = "পোস্টের ছবি";
+    box.appendChild(img);
+
+    const downloadBtn = document.createElement("a");
+    downloadBtn.href = imageData.signedUrl;
+    downloadBtn.download = "purbo-atakora-photo";
+    downloadBtn.textContent = "⬇️ ছবি ডাউনলোড করুন";
+
+    downloadBtn.style.display = "block";
+    downloadBtn.style.textAlign = "center";
+    downloadBtn.style.background = "#176b3a";
+    downloadBtn.style.color = "white";
+    downloadBtn.style.padding = "12px";
+    downloadBtn.style.marginTop = "10px";
+    downloadBtn.style.borderRadius = "7px";
+    downloadBtn.style.textDecoration = "none";
+
+    box.appendChild(downloadBtn);
+  }
+}
 
     const date = document.createElement("p");
     date.className = "date";
