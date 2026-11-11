@@ -234,7 +234,100 @@ likeBtn.onclick = async () => {
 
   await updateLikeInfo();
 };
+// মন্তব্য সুবিধা
+const commentArea = document.createElement("div");
+const commentList = document.createElement("div");
 
+const commentInput = document.createElement("input");
+commentInput.placeholder = "আপনার মন্তব্য লিখুন...";
+commentInput.style.width = "100%";
+commentInput.style.padding = "12px";
+commentInput.style.marginTop = "12px";
+commentInput.style.boxSizing = "border-box";
+
+const commentBtn = document.createElement("button");
+commentBtn.textContent = "মন্তব্য প্রকাশ করুন";
+
+async function loadComments() {
+  commentList.innerHTML = "";
+
+  const { data, error } = await supabaseClient
+    .from("post_comments")
+    .select("*")
+    .eq("post_id", post.id)
+    .order("created_at", { ascending: true });
+
+  if (error) {
+    commentList.textContent = "মন্তব্য লোড হয়নি।";
+    return;
+  }
+
+  for (const item of data || []) {
+    const p = document.createElement("p");
+    p.textContent = "💬 " + item.comment;
+    p.style.padding = "8px";
+    p.style.background = "#f3f6f4";
+    p.style.borderRadius = "6px";
+    commentList.appendChild(p);
+
+    if (item.user_id === user.id) {
+      const deleteComment = document.createElement("button");
+      deleteComment.textContent = "মন্তব্য মুছুন";
+      deleteComment.style.background = "#b52b2b";
+
+      deleteComment.onclick = async () => {
+        const { error } = await supabaseClient
+          .from("post_comments")
+          .delete()
+          .eq("id", item.id);
+
+        if (error) {
+          alert("মন্তব্য মোছা যায়নি: " + error.message);
+        } else {
+          loadComments();
+        }
+      };
+
+      commentList.appendChild(deleteComment);
+    }
+  }
+}
+
+commentBtn.onclick = async () => {
+  const comment = commentInput.value.trim();
+
+  if (!comment) {
+    alert("মন্তব্য লিখুন।");
+    return;
+  }
+
+  commentBtn.disabled = true;
+
+  const { error } = await supabaseClient
+    .from("post_comments")
+    .insert({
+      post_id: post.id,
+      user_id: user.id,
+      comment: comment
+    });
+
+  commentBtn.disabled = false;
+
+  if (error) {
+    alert("মন্তব্য প্রকাশ হয়নি: " + error.message);
+    return;
+  }
+
+  commentInput.value = "";
+  loadComments();
+};
+
+commentArea.appendChild(commentInput);
+commentArea.appendChild(commentBtn);
+commentArea.appendChild(commentList);
+box.appendChild(commentArea);
+
+await loadComments();
 likeArea.appendChild(likeBtn);
 likeArea.appendChild(likeCount);
 box.appendChild(likeArea);
