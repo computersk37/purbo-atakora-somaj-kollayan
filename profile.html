@@ -162,12 +162,16 @@ currentProfile = data;
   document.getElementById("logoutBtn").hidden = false;
 }
 async function loadEditRequestStatus() {
+async function loadEditRequestStatus() {
   const statusBox = document.getElementById("editRequestStatus");
+  const accountBox = document.getElementById("loginAccount");
 
   const { data: authData } = await supabaseClient.auth.getUser();
 
   if (!authData.user) return;
-statusBox.textContent = "লগইন অ্যাকাউন্ট: " + authData.user.email;
+
+  accountBox.textContent = "লগইন অ্যাকাউন্ট: " + authData.user.email;
+
   const { data, error } = await supabaseClient
     .from("member_edit_requests")
     .select("status, created_at")
@@ -176,7 +180,7 @@ statusBox.textContent = "লগইন অ্যাকাউন্ট: " + authDa
     .limit(1);
 
   if (error) {
-    statusBox.textContent = "আবেদনের অবস্থা লোড হয়নি।";
+    statusBox.textContent = "আবেদনের অবস্থা লোড হয়নি: " + error.message;
     return;
   }
 
@@ -194,7 +198,7 @@ statusBox.textContent = "লগইন অ্যাকাউন্ট: " + authDa
   statusBox.textContent =
     "সর্বশেষ পরিবর্তনের আবেদনের অবস্থা: " +
     (names[data[0].status] || data[0].status);
-    }
+}
 document.getElementById("logoutBtn").onclick = async () => {
   await supabaseClient.auth.signOut();
   window.location.href = "login.html";
