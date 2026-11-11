@@ -1,1 +1,258 @@
 
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>সদস্যদের পোস্ট - পূর্ব আতাকরা সমাজ কল্যাণ</title>
+
+<style>
+body {
+  font-family: Arial, sans-serif;
+  background: #f3f6f4;
+  margin: 0;
+  padding: 15px;
+}
+.container {
+  max-width: 600px;
+  margin: 20px auto;
+}
+.card {
+  background: white;
+  padding: 18px;
+  margin-bottom: 18px;
+  border-radius: 12px;
+  box-shadow: 0 2px 10px #0001;
+}
+h2 {
+  text-align: center;
+  color: #176b3a;
+}
+textarea, input {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 12px;
+  margin: 10px 0;
+  border: 1px solid #ccc;
+  border-radius: 7px;
+}
+button {
+  width: 100%;
+  padding: 12px;
+  margin-top: 10px;
+  border: 0;
+  border-radius: 7px;
+  background: #176b3a;
+  color: white;
+  font-size: 16px;
+}
+.post {
+  background: white;
+  padding: 15px;
+  margin: 15px 0;
+  border-radius: 10px;
+}
+.post img {
+  width: 100%;
+  border-radius: 8px;
+  margin-top: 10px;
+}
+.date {
+  color: #777;
+  font-size: 13px;
+}
+.delete {
+  background: #b52b2b;
+}
+#message {
+  text-align: center;
+}
+</style>
+</head>
+
+<body>
+<div class="container">
+
+<div class="card">
+<h2>সদস্যদের পোস্ট</h2>
+<p id="message">তথ্য লোড হচ্ছে...</p>
+
+<textarea id="postContent"
+placeholder="আপনার পোস্ট লিখুন..."></textarea>
+
+<label>ছবি নির্বাচন করুন (ঐচ্ছিক)</label>
+<input type="file" id="postImage" accept="image/*">
+
+<button id="submitPost">পোস্ট প্রকাশ করুন</button>
+</div>
+
+<div id="postsList"></div>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="supabase-config.js"></script>
+
+<script>
+const message = document.getElementById("message");
+const postsList = document.getElementById("postsList");
+
+async function getUser() {
+  const { data, error } = await supabaseClient.auth.getUser();
+
+  if (error || !data.user) {
+    window.location.href = "login.html";
+    return null;
+  }
+
+  return data.user;
+}
+
+async function loadPosts() {
+  const user = await getUser();
+  if (!user) return;
+
+  const { data, error } = await supabaseClient
+    .from("posts")
+    .select("*")
+    .order("created_at", { ascending: false });
+
+  if (error) {
+    message.textContent = "পোস্ট লোড হয়নি: " + error.message;
+    return;
+  }
+
+  postsList.innerHTML = "";
+
+  if (!data || data.length === 0) {
+    postsList.textContent = "এখনো কোনো পোস্ট নেই।";
+    return;
+  }
+
+  for (const post of data) {
+    const box = document.createElement("div");
+    box.className = "post";
+
+    const content = document.createElement("p");
+    content.textContent = post.content;
+    box.appendChild(content);
+
+    if (post.image_url) {
+      const { data: imageData, error: imageError } =
+        await supabaseClient.storage
+          .from("post-images")
+          .createSignedUrl(post.image_url, 3600);
+
+      if (!imageError && imageData?.signedUrl) {
+        const img = document.createElement("img");
+        img.src = imageData.signedUrl;
+        img.alt = "পোস্টের ছবি";
+        box.appendChild(img);
+      }
+    }
+
+    const date = document.createElement("p");
+    date.className = "date";
+    date.textContent = new Date(post.created_at).toLocaleString("bn-BD");
+    box.appendChild(date);
+
+    if (post.user_id === user.id) {
+      const deleteBtn = document.createElement("button");
+      deleteBtn.className = "delete";
+      deleteBtn.textContent = "পোস্ট মুছুন";
+
+      deleteBtn.onclick = async () => {
+        if (!confirm("আপনি কি পোস্টটি মুছতে চান?")) return;
+
+        const { error } = await supabaseClient
+          .from("posts")
+          .delete()
+          .eq("id", post.id);
+
+        if (error) {
+          alert("পোস্ট মোছা যায়নি: " + error.message);
+        } else {
+          loadPosts();
+        }
+      };
+
+      box.appendChild(deleteBtn);
+    }
+
+    postsList.appendChild(box);
+  }
+}
+
+document.getElementById("submitPost").onclick = async () => {
+  const user = await getUser();
+  if (!user) return;
+
+  const content = document.getElementById("postContent").value.trim();
+  const file = document.getElementById("postImage").files[0];
+
+  if (!content && !file) {
+    alert("পোস্ট লিখুন অথবা একটি ছবি নির্বাচন করুন।");
+    return;
+  }
+
+  if (file && !file.type.startsWith("image/")) {
+    alert("শুধু ছবির ফাইল নির্বাচন করুন।");
+    return;
+  }
+
+  if (file && file.size > 2 * 1024 * 1024) {
+    alert("ছবির সাইজ ২ MB-এর কম হতে হবে।");
+    return;
+  }
+
+  const button = document.getElementById("submitPost");
+  button.disabled = true;
+  button.textContent = "পোস্ট হচ্ছে...";
+
+  let imageUrl = null;
+
+  if (file) {
+    const safeName = file.name.replace(/[^a-zA-Z0-9._-]/g, "_");
+    const path = user.id + "/" + Date.now() + "_" + safeName;
+
+    const { error: uploadError } = await supabaseClient.storage
+      .from("post-images")
+      .upload(path, file);
+
+    if (uploadError) {
+      alert("ছবি আপলোড হয়নি: " + uploadError.message);
+      button.disabled = false;
+      button.textContent = "পোস্ট প্রকাশ করুন";
+      return;
+    }
+
+    imageUrl = path;
+  }
+
+  const { error } = await supabaseClient
+    .from("posts")
+    .insert({
+      user_id: user.id,
+      content: content,
+      image_url: imageUrl
+    });
+
+  button.disabled = false;
+  button.textContent = "পোস্ট প্রকাশ করুন";
+
+  if (error) {
+    alert("পোস্ট জমা হয়নি: " + error.message);
+    return;
+  }
+
+  document.getElementById("postContent").value = "";
+  document.getElementById("postImage").value = "";
+
+  message.textContent = "পোস্ট সফলভাবে প্রকাশ হয়েছে।";
+  loadPosts();
+};
+
+loadPosts();
+</script>
+</body>
+</html>
