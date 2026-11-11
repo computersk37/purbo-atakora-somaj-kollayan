@@ -466,7 +466,7 @@ document.getElementById("submitPost").onclick = async () => {
 
   const { data: profile, error: profileError } = await supabaseClient
   .from("member_applications")
-  .select("full_name, photo_url")
+  .select("full_name")
   .eq("user_id", user.id)
   .eq("approval_status", "approved")
   .maybeSingle();
