@@ -133,6 +133,35 @@ async function loadPosts() {
     const box = document.createElement("div");
     box.className = "post";
 box.id = "post-" + post.id;
+    // পোস্টদাতার নাম ও ছবি
+const authorArea = document.createElement("div");
+authorArea.style.display = "flex";
+authorArea.style.alignItems = "center";
+authorArea.style.gap = "10px";
+authorArea.style.marginBottom = "12px";
+
+if (post.author_photo_url) {
+  const { data: photoData } = await supabaseClient.storage
+    .from("member-photos")
+    .createSignedUrl(post.author_photo_url, 3600);
+
+  if (photoData?.signedUrl) {
+    const authorPhoto = document.createElement("img");
+    authorPhoto.src = photoData.signedUrl;
+    authorPhoto.alt = "প্রোফাইল ছবি";
+    authorPhoto.style.width = "45px";
+    authorPhoto.style.height = "45px";
+    authorPhoto.style.borderRadius = "50%";
+    authorPhoto.style.objectFit = "cover";
+    authorArea.appendChild(authorPhoto);
+  }
+}
+
+const authorName = document.createElement("strong");
+authorName.textContent = post.author_name || "সদস্য";
+authorArea.appendChild(authorName);
+
+box.appendChild(authorArea);
     // পোস্ট শেয়ার
 const shareBtn = document.createElement("button");
 shareBtn.textContent = "🔗 শেয়ার করুন";
