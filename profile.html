@@ -251,6 +251,57 @@ document.getElementById("cancelEditBtn").addEventListener("click", () => {
   alert("আপনার পরিবর্তনের আবেদন জমা হয়েছে। অ্যাডমিনের অনুমোদনের অপেক্ষা করুন।");
   document.getElementById("editProfileForm").hidden = true;
 });
+  document.getElementById("uploadProfilePhotoBtn")
+.addEventListener("click", async () => {
+
+  const file = document.getElementById("newProfilePhoto").files[0];
+
+  if (!file) {
+    alert("আগে একটি ছবি নির্বাচন করুন।");
+    return;
+  }
+
+  if (!file.type.startsWith("image/") || file.size > 2 * 1024 * 1024) {
+    alert("শুধু ২ MB-এর কম ছবির ফাইল নির্বাচন করুন।");
+    return;
+  }
+
+  const { data: authData } = await supabaseClient.auth.getUser();
+
+  if (!authData.user) {
+    alert("প্রথমে লগইন করুন।");
+    return;
+  }
+
+  const button = document.getElementById("uploadProfilePhotoBtn");
+  button.disabled = true;
+  button.textContent = "আপলোড হচ্ছে...";
+
+  try {
+    const path = authData.user.id + "/" + Date.now() + "-" + file.name;
+
+    const { error: uploadError } = await supabaseClient.storage
+      .from("member-photos")
+      .upload(path, file);
+
+    if (uploadError) throw uploadError;
+
+    const { error } = await supabaseClient.rpc(
+      "update_my_profile_photo",
+      { photo_path: path }
+    );
+
+    if (error) throw error;
+
+    alert("প্রোফাইল ছবি সফলভাবে পরিবর্তন হয়েছে।");
+    window.location.reload();
+
+  } catch (error) {
+    alert("ছবি আপলোড হয়নি: " + error.message);
+    button.disabled = false;
+    button.textContent = "ছবি আপলোড করুন";
+  }
+});
 loadProfile();
   loadEditRequestStatus();
 </script>
