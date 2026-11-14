@@ -148,6 +148,21 @@ div.appendChild(names);
     date.textContent = new Date(msg.created_at).toLocaleString("bn-BD");
 
     div.append(title, content, date);
+    const replyBtn = document.createElement("button");
+replyBtn.textContent = "উত্তর দিন";
+
+replyBtn.onclick = () => {
+  const replyTo =
+    msg.sender_id === currentUser.id
+      ? msg.receiver_id
+      : msg.sender_id;
+
+  document.getElementById("receiverId").value = replyTo;
+
+  document.getElementById("messageText").focus();
+};
+
+div.appendChild(replyBtn);
     list.appendChild(div);
   });
 }
