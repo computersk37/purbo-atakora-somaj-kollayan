@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ব্যক্তিগত মেসেজ - পূর্ব আতাকরা সমাজ কল্যাণ</title>
+
+<style>
+body {
+  font-family: Arial, sans-serif;
+  background: #f3f6f4;
+  margin: 0;
+  padding: 15px;
+}
+.container {
+  max-width: 600px;
+  margin: auto;
+  background: white;
+  padding: 18px;
+  border-radius: 12px;
+}
+h2 {
+  text-align: center;
+  color: #176b3a;
+}
+input, textarea, button {
+  width: 100%;
+  padding: 12px;
+  margin-top: 10px;
+  box-sizing: border-box;
+  border-radius: 7px;
+}
+input, textarea {
+  border: 1px solid #ccc;
+}
+button {
+  background: #176b3a;
+  color: white;
+  border: 0;
+  font-size: 16px;
+}
+.message {
+  padding: 12px;
+  margin: 10px 0;
+  background: #edf5ef;
+  border-radius: 8px;
+  overflow-wrap: anywhere;
+}
+small {
+  color: #666;
+}
+</style>
+</head>
+
+<body>
+<div class="container">
+
+<h2>ব্যক্তিগত মেসেজ</h2>
+
+<p id="status">লোড হচ্ছে...</p>
+
+<input id="receiverId"
+placeholder="যাকে মেসেজ পাঠাবেন তার User ID">
+
+<textarea id="messageText"
+placeholder="আপনার মেসেজ লিখুন..."></textarea>
+
+<button id="sendBtn">মেসেজ পাঠান</button>
+
+<h3>আমার মেসেজ</h3>
+<div id="messageList"></div>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="supabase-config.js"></script>
+
+<script>
+let currentUser = null;
+
+async function loadMessages() {
+  const { data, error } = await supabaseClient
+    .from("messages")
+    .select("*")
+    .order("created_at", { ascending: false });
+
+  if (error) {
+    document.getElementById("status").textContent =
+      "মেসেজ লোড হয়নি: " + error.message;
+    return;
+  }
+
+  const list = document.getElementById("messageList");
+  list.innerHTML = "";
+
+  data.forEach(msg => {
+    const div = document.createElement("div");
+    div.className = "message";
+
+    const title = document.createElement("strong");
+    title.textContent =
+      msg.sender_id === currentUser.id
+        ? "আপনার পাঠানো মেসেজ"
+        : "আপনাকে পাঠানো মেসেজ";
+
+    const content = document.createElement("p");
+    content.textContent = msg.message;
+
+    const date = document.createElement("small");
+    date.textContent = new Date(msg.created_at).toLocaleString("bn-BD");
+
+    div.append(title, content, date);
+    list.appendChild(div);
+  });
+}
+
+async function startMessages() {
+  const { data, error } = await supabaseClient.auth.getUser();
+
+  if (error || !data.user) {
+    window.location.href = "login.html";
+    return;
+  }
+
+  currentUser = data.user;
+  document.getElementById("status").textContent = "";
+  await loadMessages();
+}
+
+document.getElementById("sendBtn").onclick = async () => {
+  const receiverId =
+    document.getElementById("receiverId").value.trim();
+
+  const message =
+    document.getElementById("messageText").value.trim();
+
+  if (!receiverId || !message) {
+    alert("প্রাপক User ID এবং মেসেজ লিখুন।");
+    return;
+  }
+
+  const button = document.getElementById("sendBtn");
+  button.disabled = true;
+
+  const { error } = await supabaseClient
+    .from("messages")
+    .insert({
+      sender_id: currentUser.id,
+      receiver_id: receiverId,
+      message: message
+    });
+
+  button.disabled = false;
+
+  if (error) {
+    alert("মেসেজ পাঠানো যায়নি: " + error.message);
+    return;
+  }
+
+  document.getElementById("messageText").value = "";
+  alert("মেসেজ পাঠানো হয়েছে!");
+  await loadMessages();
+};
+
+startMessages();
+</script>
+
+</body>
+</html>
