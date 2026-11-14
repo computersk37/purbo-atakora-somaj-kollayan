@@ -78,7 +78,29 @@ placeholder="আপনার মেসেজ লিখুন..."></textarea>
 
 <script>
 let currentUser = null;
+async function loadMembers() {
+  const { data, error } = await supabaseClient.rpc(
+    "get_approved_members_for_messaging"
+  );
 
+  const receiverSelect = document.getElementById("receiverId");
+
+  if (error) {
+    document.getElementById("status").textContent =
+      "সদস্য লোড হয়নি: " + error.message;
+    return;
+  }
+
+  receiverSelect.innerHTML =
+    '<option value="">সদস্য নির্বাচন করুন</option>';
+
+  data.forEach(member => {
+    const option = document.createElement("option");
+    option.value = member.user_id;
+    option.textContent = member.full_name;
+    receiverSelect.appendChild(option);
+  });
+}
 async function loadMessages() {
   const { data, error } = await supabaseClient
     .from("messages")
@@ -124,8 +146,8 @@ async function startMessages() {
   }
 
   currentUser = data.user;
-  document.getElementById("status").textContent = "";
-  await loadMessages();
+await loadMembers();
+await loadMessages();
 }
 
 document.getElementById("sendBtn").onclick = async () => {
