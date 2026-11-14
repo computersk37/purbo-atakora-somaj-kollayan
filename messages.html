@@ -83,6 +83,41 @@ placeholder="আপনার মেসেজ লিখুন..."></textarea>
 <script>
 let currentUser = null;
   let membersList = [];
+  let selectedChatUserId = null;
+
+async function loadInbox() {
+  const { data, error } = await supabaseClient
+    .from("messages")
+    .select("sender_id, receiver_id")
+    .order("created_at", { ascending: false });
+
+  const inbox = document.getElementById("inboxList");
+  inbox.innerHTML = "";
+
+  if (error) {
+    inbox.textContent = "ইনবক্স লোড হয়নি: " + error.message;
+    return;
+  }
+
+  const userIds = [...new Set(data.map(msg =>
+    msg.sender_id === currentUser.id
+      ? msg.receiver_id
+      : msg.sender_id
+  ))];
+
+  userIds.forEach(userId => {
+    const member = membersList.find(m => m.user_id === userId);
+    const btn = document.createElement("button");
+
+    btn.textContent = member ? member.full_name : "সদস্য";
+    btn.onclick = () => {
+      selectedChatUserId = userId;
+      loadMessages();
+    };
+
+    inbox.appendChild(btn);
+  });
+}
 async function loadMembers() {
   const { data, error } = await supabaseClient.rpc(
     "get_approved_members_for_messaging"
