@@ -148,6 +148,7 @@ async function startMessages() {
   currentUser = data.user;
 await loadMembers();
 await loadMessages();
+document.getElementById("status").textContent = "";
 }
 
 document.getElementById("sendBtn").onclick = async () => {
