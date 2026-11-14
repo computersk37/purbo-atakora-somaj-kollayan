@@ -224,6 +224,7 @@ async function startMessages() {
 
   currentUser = data.user;
 await loadMembers();
+await loadInbox();
 await loadMessages();
 document.getElementById("status").textContent = "";
 }
@@ -260,7 +261,7 @@ document.getElementById("sendBtn").onclick = async () => {
 
   document.getElementById("messageText").value = "";
   alert("মেসেজ পাঠানো হয়েছে!");
-  await loadMessages();
+  await loadInbox();
 };
 
 startMessages();
