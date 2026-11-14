@@ -78,6 +78,7 @@ placeholder="আপনার মেসেজ লিখুন..."></textarea>
 
 <script>
 let currentUser = null;
+  let membersList = [];
 async function loadMembers() {
   const { data, error } = await supabaseClient.rpc(
     "get_approved_members_for_messaging"
@@ -90,7 +91,7 @@ async function loadMembers() {
       "সদস্য লোড হয়নি: " + error.message;
     return;
   }
-
+membersList = data;
   receiverSelect.innerHTML =
     '<option value="">সদস্য নির্বাচন করুন</option>';
 
