@@ -142,10 +142,18 @@ membersList = data;
   });
 }
 async function loadMessages() {
-  const { data, error } = await supabaseClient
-    .from("messages")
-    .select("*")
-    .order("created_at", { ascending: false });
+  let query = supabaseClient
+  .from("messages")
+  .select("*");
+
+if (selectedChatUserId) {
+  query = query.or(
+    `and(sender_id.eq.${currentUser.id},receiver_id.eq.${selectedChatUserId}),and(sender_id.eq.${selectedChatUserId},receiver_id.eq.${currentUser.id})`
+  );
+}
+
+const { data, error } = await query
+  .order("created_at", { ascending: false });
 
   if (error) {
     document.getElementById("status").textContent =
