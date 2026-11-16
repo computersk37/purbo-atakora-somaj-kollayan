@@ -21,7 +21,7 @@
     }
     h2 { text-align: center; color: #075c3b; }
     label { display: block; margin-top: 13px; }
-    input, textarea {
+    input, textarea, select {
       width: 100%;
       padding: 12px;
       margin-top: 6px;
@@ -61,7 +61,40 @@
 
     <label>মোবাইল নম্বর</label>
     <input id="phone" type="tel" required>
+<label>পেশা</label>
+<select id="occupation" required>
+  <option value="">পেশা নির্বাচন করুন</option>
+  <option value="চাকরিজীবী">চাকরিজীবী</option>
+  <option value="ব্যবসায়ী">ব্যবসায়ী</option>
+  <option value="কৃষক">কৃষক</option>
+  <option value="ছাত্র/ছাত্রী">ছাত্র/ছাত্রী</option>
+  <option value="শ্রমিক">শ্রমিক</option>
+  <option value="অন্যান্য">অন্যান্য</option>
+</select>
 
+<label>রক্তের গ্রুপ</label>
+<select id="blood_group" required>
+  <option value="">রক্তের গ্রুপ নির্বাচন করুন</option>
+  <option value="A+">A+</option>
+  <option value="A-">A-</option>
+  <option value="B+">B+</option>
+  <option value="B-">B-</option>
+  <option value="AB+">AB+</option>
+  <option value="AB-">AB-</option>
+  <option value="O+">O+</option>
+  <option value="O-">O-</option>
+</select>
+
+<label>আপনি কি প্রবাসী?</label>
+<select id="is_expat" required>
+  <option value="">নির্বাচন করুন</option>
+  <option value="হ্যাঁ">হ্যাঁ</option>
+  <option value="না">না</option>
+</select>
+
+<label>প্রবাসী হলে কোন দেশে থাকেন?</label>
+<input id="country" type="text"
+placeholder="দেশের নাম লিখুন (ঐচ্ছিক)">
     <label>বিস্তারিত (ঐচ্ছিক)</label>
     <textarea id="details"></textarea>
 <label>প্রোফাইল ছবি (ঐচ্ছিক)</label>
