@@ -94,7 +94,7 @@ async function loadApprovedMembers() {
 
   const { data, error } = await supabaseClient
     .from("members")
-    .select("id, full_name, address, phone, details, photo_url")
+    .select("id, full_name, address, phone, occupation, blood_group, is_expat, country, details, photo_url")
     .eq("approval_status", "approved")
     .order("created_at", { ascending: false });
 
@@ -337,11 +337,15 @@ async function loadApplications() {
     title.textContent = app.full_name;
 
     const fields = [
-      "ঠিকানা: " + app.address,
-      "মোবাইল: " + app.phone,
-      "বিস্তারিত: " + (app.details || "নেই"),
-      "অবস্থা: " + app.approval_status
-    ];
+  "ঠিকানা: " + app.address,
+  "মোবাইল: " + app.phone,
+  "পেশা: " + (app.occupation || "নেই"),
+  "রক্তের গ্রুপ: " + (app.blood_group || "নেই"),
+  "প্রবাসী: " + (app.is_expat || "নেই"),
+  "দেশ: " + (app.country || "নেই"),
+  "বিস্তারিত: " + (app.details || "নেই"),
+  "অবস্থা: " + app.approval_status
+];
 
     card.appendChild(title);
 
