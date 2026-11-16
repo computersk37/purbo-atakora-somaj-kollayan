@@ -168,11 +168,15 @@ form.addEventListener("submit", async function(e) {
   message.textContent = "আবেদন প্রক্রিয়া চলছে...";
 
   const draft = {
-    full_name: document.getElementById("name").value.trim(),
-    address: document.getElementById("address").value.trim(),
-    phone: document.getElementById("phone").value.trim(),
-    details: document.getElementById("details").value.trim()
-  };
+  full_name: document.getElementById("name").value.trim(),
+  address: document.getElementById("address").value.trim(),
+  phone: document.getElementById("phone").value.trim(),
+  occupation: document.getElementById("occupation").value,
+  blood_group: document.getElementById("blood_group").value,
+  is_expat: document.getElementById("is_expat").value,
+  country: document.getElementById("country").value.trim(),
+  details: document.getElementById("details").value.trim()
+};
 
   const photoFile =
     document.getElementById("photo").files[0] || null;
