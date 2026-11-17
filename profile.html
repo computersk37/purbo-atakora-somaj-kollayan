@@ -78,7 +78,31 @@
 
   <label>মোবাইল নম্বর</label>
   <input type="text" id="editPhone">
+<label>পেশা</label>
+<input type="text" id="editOccupation">
 
+<label>রক্তের গ্রুপ</label>
+<select id="editBloodGroup">
+  <option value="">রক্তের গ্রুপ নির্বাচন করুন</option>
+  <option value="A+">A+</option>
+  <option value="A-">A-</option>
+  <option value="B+">B+</option>
+  <option value="B-">B-</option>
+  <option value="AB+">AB+</option>
+  <option value="AB-">AB-</option>
+  <option value="O+">O+</option>
+  <option value="O-">O-</option>
+</select>
+
+<label>আপনি কি প্রবাসী?</label>
+<select id="editIsExpat">
+  <option value="">নির্বাচন করুন</option>
+  <option value="হ্যাঁ">হ্যাঁ</option>
+  <option value="না">না</option>
+</select>
+
+<label>দেশের নাম</label>
+<input type="text" id="editCountry" placeholder="প্রবাসী হলে দেশের নাম">
   <label>বিস্তারিত</label>
   <textarea id="editDetails"></textarea>
 
@@ -113,7 +137,7 @@ async function loadProfile() {
 
   const { data, error } = await supabaseClient
     .from("member_applications")
-    .select("full_name, address, phone, details, photo_url, approval_status")
+    .select("full_name, address, phone, occupation, blood_group, is_expat, country, details, photo_url, approval_status")
     .eq("user_id", authData.user.id)
 .order("created_at", { ascending: false })
 .limit(1)
@@ -155,9 +179,15 @@ currentProfile = data;
     ["নাম", data.full_name],
     ["ঠিকানা", data.address],
     ["মোবাইল নম্বর", data.phone],
+    ["পেশা", data.occupation],
+    ["রক্তের গ্রুপ", data.blood_group],
+    ["প্রবাসী", data.is_expat],
+    ["দেশ", data.country],
     ["বিস্তারিত", data.details],
     ["আবেদনের অবস্থা", statusNames[data.approval_status] || data.approval_status]
   ];
+
+  
 
   fields.forEach(([label, value]) => {
     const div = document.createElement("div");
@@ -216,6 +246,10 @@ document.getElementById("editProfileBtn").addEventListener("click", () => {
   document.getElementById("editFullName").value = currentProfile.full_name || "";
   document.getElementById("editAddress").value = currentProfile.address || "";
   document.getElementById("editPhone").value = currentProfile.phone || "";
+  document.getElementById("editOccupation").value = currentProfile.occupation || "";
+document.getElementById("editBloodGroup").value = currentProfile.blood_group || "";
+document.getElementById("editIsExpat").value = currentProfile.is_expat || "";
+document.getElementById("editCountry").value = currentProfile.country || "";
   document.getElementById("editDetails").value = currentProfile.details || "";
 
   document.getElementById("editProfileForm").hidden = false;
@@ -233,14 +267,19 @@ document.getElementById("cancelEditBtn").addEventListener("click", () => {
   }
 
   const { error } = await supabaseClient
-    .from("member_edit_requests")
+   .from("member_edit_requests")
     .insert({
       user_id: authData.user.id,
       full_name: document.getElementById("editFullName").value.trim(),
       address: document.getElementById("editAddress").value.trim(),
       phone: document.getElementById("editPhone").value.trim(),
+      occupation: document.getElementById("editOccupation").value.trim(),
+      blood_group: document.getElementById("editBloodGroup").value,
+      is_expat: document.getElementById("editIsExpat").value,
+      country: document.getElementById("editCountry").value.trim(),
       details: document.getElementById("editDetails").value.trim(),
       status: "pending"
+  
     });
 
   if (error) {
