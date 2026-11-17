@@ -291,10 +291,14 @@ async function loadEditRequests() {
 
     const info = document.createElement("p");
     info.textContent =
-      "ঠিকানা: " + request.address +
-      " | মোবাইল: " + request.phone +
-      " | বিস্তারিত: " + (request.details || "নেই") +
-      " | অবস্থা: " + request.status;
+  "ঠিকানা: " + request.address +
+  " | মোবাইল: " + request.phone +
+  " | পেশা: " + (request.occupation || "নেই") +
+  " | রক্তের গ্রুপ: " + (request.blood_group || "নেই") +
+  " | প্রবাসী: " + (request.is_expat || "নেই") +
+  " | দেশ: " + (request.country || "নেই") +
+  " | বিস্তারিত: " + (request.details || "নেই") +
+  " | অবস্থা: " + request.status;
 
     card.append(title, info);
 
