@@ -152,7 +152,21 @@ card.appendChild(photoInput);
     const phone = document.createElement("input");
     phone.value = member.phone || "";
     phone.placeholder = "মোবাইল নম্বর";
+const occupation = document.createElement("input");
+occupation.value = member.occupation || "";
+occupation.placeholder = "পেশা";
 
+const bloodGroup = document.createElement("input");
+bloodGroup.value = member.blood_group || "";
+bloodGroup.placeholder = "রক্তের গ্রুপ";
+
+const isExpat = document.createElement("input");
+isExpat.value = member.is_expat || "";
+isExpat.placeholder = "প্রবাসী কি না (হ্যাঁ/না)";
+
+const country = document.createElement("input");
+country.value = member.country || "";
+country.placeholder = "দেশের নাম";
     const details = document.createElement("textarea");
     details.value = member.details || "";
     details.placeholder = "বিস্তারিত তথ্য";
