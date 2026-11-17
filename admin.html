@@ -79,9 +79,11 @@ async function startDashboard() {
     await supabaseClient.rpc("is_admin");
 
   if (adminError || admin !== true) {
-    message.textContent = "আপনার অ্যাডমিন অনুমতি নেই।";
-    return;
-  }
+  message.textContent =
+    "অ্যাডমিন যাচাই সমস্যা: " +
+    (adminError ? adminError.message : "is_admin ফলাফল: " + String(admin));
+  return;
+}
   logoutBtn.hidden = false;
 await loadApplications();
 await loadEditRequests();
