@@ -176,11 +176,15 @@ country.placeholder = "দেশের নাম";
 
     save.onclick = async () => {
   const updateData = {
-    full_name: name.value.trim(),
-    address: address.value.trim(),
-    phone: phone.value.trim(),
-    details: details.value.trim()
-  };
+  full_name: name.value.trim(),
+  address: address.value.trim(),
+  phone: phone.value.trim(),
+  occupation: occupation.value.trim(),
+  blood_group: bloodGroup.value.trim(),
+  is_expat: isExpat.value.trim(),
+  country: country.value.trim(),
+  details: details.value.trim()
+};
 
   const selectedPhoto = photoInput.files[0];
 
@@ -241,7 +245,18 @@ country.placeholder = "দেশের নাম";
 }; 
       
 
-    card.append(title, name, address, phone, details, save);
+    card.append(
+  title,
+  name,
+  address,
+  phone,
+  occupation,
+  bloodGroup,
+  isExpat,
+  country,
+  details,
+  save
+);
       approvedList.appendChild(card);
 });
 }
