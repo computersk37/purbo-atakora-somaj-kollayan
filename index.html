@@ -195,6 +195,26 @@ nav a:hover {
 </footer>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="supabase-config.js"></script><div style="text-align:center; margin:20px;">
+  <script>
+async function loadTotalMembers() {
+  const { count, error } = await supabaseClient
+    .from("members")
+    .select("id", { count: "exact", head: true })
+    .eq("approval_status", "approved");
+
+  const display = document.getElementById("totalMembers");
+
+  if (error) {
+    display.textContent = "লোড হয়নি";
+    console.log("সদস্য সংখ্যা সমস্যা:", error.message);
+    return;
+  }
+
+  display.textContent = count ?? 0;
+}
+
+loadTotalMembers();
+</script>
   <a href="members.html" style="
     display:inline-block;
     background:#087f5b;
