@@ -97,7 +97,147 @@
 const message = document.getElementById("message");
 const list = document.getElementById("applications");
 const logoutBtn = document.getElementById("logoutBtn");
+// নোটিশ প্রকাশ
+document.getElementById("publishNoticeBtn").addEventListener("click", async () => {
+  const title = document.getElementById("noticeTitle").value.trim();
+  const content = document.getElementById("noticeContent").value.trim();
+  const noticeMessage = document.getElementById("noticeMessage");
 
+  if (!title || !content) {
+    noticeMessage.textContent = "শিরোনাম ও বিস্তারিত লিখুন।";
+    return;
+  }
+
+  const { error } = await supabaseClient
+    .from("notices")
+    .insert({
+      title: title,
+      content: content,
+      is_published: true
+    });
+
+  if (error) {
+    noticeMessage.textContent = "নোটিশ প্রকাশ হয়নি: " + error.message;
+    return;
+  }
+
+  document.getElementById("noticeTitle").value = "";
+  document.getElementById("noticeContent").value = "";
+  noticeMessage.textContent = "নোটিশ সফলভাবে প্রকাশ হয়েছে।";
+
+  await loadNotices();
+});
+
+
+// সব নোটিশ লোড
+async function loadNotices() {
+  const noticeList = document.getElementById("noticesList");
+  noticeList.textContent = "নোটিশ লোড হচ্ছে...";
+
+  const { data, error } = await supabaseClient
+    .from("notices")
+    .select("*")
+    .order("created_at", { ascending: false });
+
+  if (error) {
+    noticeList.textContent = "নোটিশ লোড হয়নি: " + error.message;
+    return;
+  }
+
+  noticeList.replaceChildren();
+
+  if (!data || data.length === 0) {
+    noticeList.textContent = "এখনো কোনো নোটিশ নেই।";
+    return;
+  }
+
+  data.forEach(notice => {
+    const card = document.createElement("div");
+    card.className = "application";
+
+    const title = document.createElement("h3");
+    title.textContent = notice.title;
+
+    const content = document.createElement("p");
+    content.textContent = notice.content;
+
+    const status = document.createElement("p");
+    status.textContent = notice.is_published ? "প্রকাশিত" : "অপ্রকাশিত";
+
+    const edit = document.createElement("button");
+    edit.textContent = "সম্পাদনা";
+
+    edit.onclick = async () => {
+      const newTitle = prompt("নোটিশের নতুন শিরোনাম:", notice.title);
+      if (newTitle === null) return;
+
+      const newContent = prompt("নোটিশের নতুন বিস্তারিত:", notice.content);
+      if (newContent === null) return;
+
+      if (!newTitle.trim() || !newContent.trim()) {
+        alert("শিরোনাম ও বিস্তারিত খালি রাখা যাবে না।");
+        return;
+      }
+
+      const { error } = await supabaseClient
+        .from("notices")
+        .update({
+          title: newTitle.trim(),
+          content: newContent.trim(),
+          updated_at: new Date().toISOString()
+        })
+        .eq("id", notice.id);
+
+      if (error) {
+        alert("পরিবর্তন হয়নি: " + error.message);
+        return;
+      }
+
+      alert("নোটিশ পরিবর্তন হয়েছে।");
+      await loadNotices();
+    };
+
+    const toggle = document.createElement("button");
+    toggle.textContent = notice.is_published ? "অপ্রকাশিত করুন" : "প্রকাশ করুন";
+
+    toggle.onclick = async () => {
+      const { error } = await supabaseClient
+        .from("notices")
+        .update({ is_published: !notice.is_published })
+        .eq("id", notice.id);
+
+      if (error) {
+        alert("সমস্যা: " + error.message);
+        return;
+      }
+
+      await loadNotices();
+    };
+
+    const remove = document.createElement("button");
+    remove.textContent = "মুছে ফেলুন";
+    remove.className = "reject";
+
+    remove.onclick = async () => {
+      if (!confirm("আপনি কি এই নোটিশ মুছে ফেলতে চান?")) return;
+
+      const { error } = await supabaseClient
+        .from("notices")
+        .delete()
+        .eq("id", notice.id);
+
+      if (error) {
+        alert("মুছে ফেলা যায়নি: " + error.message);
+        return;
+      }
+
+      await loadNotices();
+    };
+
+    card.append(title, content, status, edit, toggle, remove);
+    noticeList.appendChild(card);
+  });
+    }
 async function startDashboard() {
   const { data: sessionData, error: sessionError } =
     await supabaseClient.auth.getSession();
@@ -120,6 +260,7 @@ async function startDashboard() {
 await loadApplications();
 await loadEditRequests();
 await loadApprovedMembers();
+await loadNotices();
 }
 
 async function loadApprovedMembers() {
