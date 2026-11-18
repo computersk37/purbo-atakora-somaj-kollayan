@@ -222,6 +222,49 @@ async function loadTotalMembers() {
 
 loadTotalMembers();
 </script>
+  <script>
+async function loadHomeNotices() {
+  const noticeBox = document.getElementById("homeNotices");
+
+  const { data, error } = await supabaseClient
+    .from("notices")
+    .select("id, title, content, created_at")
+    .eq("is_published", true)
+    .order("created_at", { ascending: false });
+
+  if (error) {
+    noticeBox.textContent = "নোটিশ লোড করা যায়নি।";
+    return;
+  }
+
+  noticeBox.replaceChildren();
+
+  if (!data || data.length === 0) {
+    noticeBox.textContent = "বর্তমানে কোনো নোটিশ নেই।";
+    return;
+  }
+
+  data.forEach(notice => {
+    const card = document.createElement("div");
+    card.style.cssText =
+      "background:white;padding:18px;border-radius:10px;margin:12px 0;text-align:left;";
+
+    const title = document.createElement("h3");
+    title.textContent = notice.title;
+
+    const content = document.createElement("p");
+    content.textContent = notice.content;
+
+    const date = document.createElement("small");
+    date.textContent = new Date(notice.created_at).toLocaleDateString("bn-BD");
+
+    card.append(title, content, date);
+    noticeBox.appendChild(card);
+  });
+}
+
+loadHomeNotices();
+  </script>
   <a href="members.html" style="
     display:inline-block;
     background:#087f5b;
