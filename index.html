@@ -234,6 +234,33 @@ async function loadTotalMembers() {
 loadTotalMembers();
 </script>
   <script>
+async function checkHomeLogin() {
+  const { data } = await supabaseClient.auth.getSession();
+
+  const logoutBtn = document.getElementById("homeLogoutBtn");
+
+  if (data.session) {
+    logoutBtn.style.display = "inline-block";
+  } else {
+    logoutBtn.style.display = "none";
+  }
+}
+
+checkHomeLogin();
+
+document.getElementById("homeLogoutBtn").addEventListener("click", async () => {
+  const { error } = await supabaseClient.auth.signOut();
+
+  if (error) {
+    alert("লগআউট সমস্যা: " + error.message);
+    return;
+  }
+
+  alert("সফলভাবে লগআউট হয়েছে।");
+  window.location.href = "login.html";
+});
+  </script>
+  <script>
 async function loadHomeNotices() {
   const noticeBox = document.getElementById("homeNotices");
 
