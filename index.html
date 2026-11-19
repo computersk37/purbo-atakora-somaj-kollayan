@@ -4,57 +4,122 @@
   <meta name="google-site-verification" content="zG9QoN8cJqgRY4c7MXl532_122yIUlZ5e-xD4287yzM" />
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
   <title>পূর্ব আতাকরা সমাজ কল্যাণ</title>
+
   <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
     body {
       font-family: Arial, sans-serif;
       background: #f4f8f5;
       color: #18352a;
       line-height: 1.7;
     }
+
     header {
-  background: #064e36;
-  color: white;
-  padding: 18px 6%;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 15px;
-  box-shadow: 0 3px 12px #0002;
-}
+      background: #064e36;
+      color: white;
+      padding: 15px 6%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 15px;
+      box-shadow: 0 3px 12px #0002;
+    }
 
-header h2 {
-  font-size: 21px;
-  font-weight: bold;
-}
+    .language-bar {
+      width: 100%;
+      text-align: right;
+    }
 
-nav {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 16px;
-}
+    .language-bar button {
+      padding: 7px 14px;
+      border: 0;
+      border-radius: 5px;
+      margin-left: 5px;
+      cursor: pointer;
+      font-weight: bold;
+    }
 
-nav a {
-  color: white;
-  text-decoration: none;
-  font-weight: bold;
-  font-size: 15px;
-}
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
 
-nav a:hover {
-  color: #f5c542;
-}
-      
+    .logo {
+      width: 45px;
+      height: 45px;
+      border-radius: 50%;
+      background: #f5c542;
+      color: #075c3b;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      font-weight: bold;
+    }
+
+    header h2 {
+      font-size: 21px;
+    }
+
+    .motto {
+      font-size: 12px;
+      color: #e0f2e9;
+      width: 100%;
+    }
+
+    nav {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    nav a {
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
+      font-size: 15px;
+    }
+
+    nav a:hover {
+      color: #f5c542;
+    }
+
     .hero {
       text-align: center;
       padding: 75px 20px;
       background: linear-gradient(135deg, #075c3b, #159765);
       color: white;
     }
-    .hero h1 { font-size: 34px; margin-bottom: 15px; }
-    .hero p { font-size: 17px; margin-bottom: 25px; }
+
+    .welcome {
+      display: inline-block;
+      padding: 7px 18px;
+      border: 1px solid #ffffff80;
+      border-radius: 30px;
+      margin-bottom: 18px;
+      font-size: 14px;
+    }
+
+    .hero h1 {
+      font-size: 34px;
+      margin-bottom: 15px;
+    }
+
+    .hero p {
+      font-size: 17px;
+      margin-bottom: 25px;
+    }
+
     .btn {
       display: inline-block;
       padding: 11px 24px;
@@ -65,38 +130,316 @@ nav a:hover {
       font-weight: bold;
       margin: 5px;
     }
+
+    .btn:hover {
+      background: #ffdb69;
+    }
+
     section {
       padding: 45px 7%;
       text-align: center;
     }
-    section h2 { color: #075c3b; margin-bottom: 15px; }
+
+    section h2 {
+      color: #075c3b;
+      margin-bottom: 15px;
+    }
+
+    .member-section {
+      background: #e5f3eb;
+    }
+
+    .member-number {
+      font-size: 30px;
+      font-weight: bold;
+      color: #08764b;
+    }
+
+    .notice-section {
+      background: #fff8df;
+    }
+
+    .notice-section h2 {
+      color: #8a6500;
+    }
+
+    .notice-card {
+      background: white;
+      padding: 18px;
+      border-radius: 10px;
+      margin: 12px 0;
+      text-align: left;
+      box-shadow: 0 3px 12px #00000010;
+    }
+
+    .notice-card h3 {
+      color: #08764b;
+      margin-bottom: 8px;
+    }
+
     .cards {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
       gap: 18px;
       margin-top: 25px;
     }
+
     .card {
       background: white;
-      padding: 25px;
+      padding: 30px 22px;
       border-radius: 12px;
       box-shadow: 0 3px 12px #00000012;
+      min-height: 170px;
     }
-    .card h3 { color: #08764b; margin-bottom: 8px; }
+
+    .card h3 {
+      color: #08764b;
+      margin-bottom: 12px;
+      font-size: 21px;
+    }
+
+    .card p {
+      color: #18352a;
+      font-size: 15px;
+      margin: 0;
+    }
+
+    .contact-section {
+      background: #e5f3eb;
+    }
+
     footer {
       background: #063e2b;
       color: white;
       text-align: center;
       padding: 22px;
     }
+
+    .extra-links {
+      text-align: center;
+      margin: 20px;
+    }
+
+    .extra-links a {
+      display: inline-block;
+      background: #087f5b;
+      color: white;
+      padding: 12px 22px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: bold;
+      margin: 5px;
+    }
+
+    #homeLogoutArea {
+      text-align: right;
+      padding: 10px 6%;
+    }
+
+    #homeLogoutBtn {
+      display: none;
+      background: #b83232;
+      color: white;
+      border: 0;
+      padding: 10px 18px;
+      border-radius: 7px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
     @media(max-width: 600px) {
-      header { justify-content: center; text-align: center; }
-      nav a { margin: 0 7px; font-size: 14px; }
-      .hero h1 { font-size: 27px; }
+      header {
+        justify-content: center;
+        text-align: center;
+      }
+
+      .brand {
+        justify-content: center;
+      }
+
+      nav {
+        justify-content: center;
+      }
+
+      nav a {
+        font-size: 14px;
+      }
+
+      .hero {
+        padding: 55px 15px;
+      }
+
+      .hero h1 {
+        font-size: 27px;
+      }
+
+      .hero p {
+        font-size: 15px;
+      }
+
+      .cards {
+        grid-template-columns: 1fr;
+      }
+
+      section {
+        padding: 35px 6%;
+      }
     }
   </style>
 </head>
+
+<body>
+
+<header>
+
+  <div class="language-bar">
+    <button onclick="setLanguage('bn')">বাংলা</button>
+    <button onclick="setLanguage('en')">English</button>
+  </div>
+
+  <div class="brand">
+    <div class="logo">পা</div>
+
+    <div>
+      <h2 id="orgName">পূর্ব আতাকরা সমাজ কল্যাণ</h2>
+      <p id="motto" class="motto">ঐক্য • সহযোগিতা • মানবসেবা</p>
+    </div>
+  </div>
+
+  <nav>
+    <a id="navHome" href="#home">হোম</a>
+    <a id="navAbout" href="#about">আমাদের সম্পর্কে</a>
+    <a id="navServices" href="#services">কার্যক্রম</a>
+    <a id="navContact" href="#contact">যোগাযোগ</a>
+  </nav>
+
+</header>
+
+<div id="homeLogoutArea">
+  <button id="homeLogoutBtn">লগআউট</button>
+</div>
+
+<div class="hero" id="home">
+
+  <div id="welcomeText" class="welcome">
+    স্বাগতম — আমাদের সামাজিক পরিবারে
+  </div>
+
+  <h1 id="heroTitle">পূর্ব আতাকরা সমাজ কল্যাণ</h1>
+
+  <p id="heroSlogan">
+    ঐক্য, সহযোগিতা ও মানবসেবায় গড়ে উঠুক সুন্দর সমাজ।
+  </p>
+
+  <div style="margin-top:25px;">
+
+    <a id="loginLink" class="btn" href="login.html">🔐 সদস্য লগইন</a>
+
+    <a id="registerLink" class="btn" href="register.html">📝 সদস্য নিবন্ধন</a>
+
+    <a id="adminLink" class="btn" href="admin.html">⚙️ অ্যাডমিন ড্যাশবোর্ড</a>
+
+    <a id="aboutLink" class="btn" href="#about">আমাদের সম্পর্কে</a>
+
+    <a id="contactLink" class="btn" href="#contact">যোগাযোগ করুন</a>
+
+  </div>
+
+</div>
+
+<section class="member-section">
+
+  <h2 id="membersHeading">আমাদের সদস্য</h2>
+
+  <p class="member-number">
+    <span id="totalMembers">লোড হচ্ছে...</span>
+  </p>
+
+  <p id="memberUnit">জন অনুমোদিত সদস্য</p>
+
+</section>
+
+<section class="notice-section">
+
+  <h2 id="noticeHeading">📢 নোটিশ বোর্ড</h2>
+
+  <div id="homeNotices">
+    নোটিশ লোড হচ্ছে...
+  </div>
+
+</section>
+
+<section id="about">
+
+  <h2 id="aboutHeading">আমাদের সম্পর্কে</h2>
+
+  <p id="aboutText">
+    পূর্ব আতাকরা সমাজ কল্যাণ একটি সামাজিক উদ্যোগ।
+    সমাজের মানুষের মধ্যে ঐক্য, সহযোগিতা ও কল্যাণমূলক
+    কার্যক্রমকে এগিয়ে নেওয়াই আমাদের লক্ষ্য।
+  </p>
+
+</section>
+
+<section id="services">
+
+  <h2 id="servicesHeading">আমাদের কার্যক্রম</h2>
+
+  <div class="cards">
+
+    <div class="card">
+      <h3 id="service1Title">সদস্য ব্যবস্থাপনা</h3>
+      <p id="service1Text">সদস্যদের তথ্য সংরক্ষণ ও পরিচালনা।</p>
+    </div>
+
+    <div class="card">
+      <h3 id="service2Title">সামাজিক সহযোগিতা</h3>
+      <p id="service2Text">সমাজের মানুষের পাশে দাঁড়ানো।</p>
+    </div>
+
+    <div class="card">
+      <h3 id="service3Title">মানবসেবা</h3>
+      <p id="service3Text">মানবিক ও কল্যাণমূলক কাজে অংশগ্রহণ।</p>
+    </div>
+
+  </div>
+
+</section>
+
+<section id="contact" class="contact-section">
+
+  <h2 id="contactHeading">যোগাযোগ</h2>
+
+  <p id="contactOrgName">পূর্ব আতাকরা সমাজ কল্যাণ</p>
+
+  <p id="contactInfo">যোগাযোগের তথ্য শীঘ্রই যুক্ত করা হবে।</p>
+
+</section>
+
+<footer>
+  <p id="footerText">
+    © 2026 পূর্ব আতাকরা সমাজ কল্যাণ। সর্বস্বত্ব সংরক্ষিত।
+  </p>
+</footer>
+
+<div class="extra-links">
+
+  <a id="membersLink" href="members.html">
+    সদস্য তালিকা দেখুন
+  </a>
+
+  <a id="postsLink" href="posts.html" style="background:#176b3a;">
+    সদস্যদের পোস্ট দেখুন
+  </a>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="supabase-config.js"></script>
+
 <script>
+let currentHomeLanguage = "bn";
+
 const homeTranslations = {
   bn: {
     orgName: "পূর্ব আতাকরা সমাজ কল্যাণ",
@@ -128,7 +471,15 @@ const homeTranslations = {
     contactHeading: "যোগাযোগ",
     contactOrgName: "পূর্ব আতাকরা সমাজ কল্যাণ",
     contactInfo: "যোগাযোগের তথ্য শীঘ্রই যুক্ত করা হবে।",
-    footerText: "© 2026 পূর্ব আতাকরা সমাজ কল্যাণ। সর্বস্বত্ব সংরক্ষিত।"
+    footerText: "© 2026 পূর্ব আতাকরা সমাজ কল্যাণ। সর্বস্বত্ব সংরক্ষিত।",
+    logout: "লগআউট",
+    membersLink: "সদস্য তালিকা দেখুন",
+    postsLink: "সদস্যদের পোস্ট দেখুন",
+    loading: "লোড হচ্ছে...",
+    noticeLoading: "নোটিশ লোড হচ্ছে...",
+    noNotices: "বর্তমানে কোনো নোটিশ নেই।",
+    noticeError: "নোটিশ লোড করা যায়নি।",
+    memberError: "লোড হয়নি"
   },
 
   en: {
@@ -161,162 +512,47 @@ const homeTranslations = {
     contactHeading: "Contact",
     contactOrgName: "Purbo Atakora Social Welfare",
     contactInfo: "Contact information will be added soon.",
-    footerText: "© 2026 Purbo Atakora Social Welfare. All rights reserved."
+    footerText: "© 2026 Purbo Atakora Social Welfare. All rights reserved.",
+    logout: "Log out",
+    membersLink: "View Member Directory",
+    postsLink: "View Member Posts",
+    loading: "Loading...",
+    noticeLoading: "Loading notices...",
+    noNotices: "There are currently no notices.",
+    noticeError: "Unable to load notices.",
+    memberError: "Could not load"
   }
 };
 
 function setLanguage(lang) {
   const translations = homeTranslations[lang];
+
   if (!translations) return;
 
-  document.documentElement.lang = lang === "en" ? "en" : "bn";
+  currentHomeLanguage = lang;
+  document.documentElement.lang = lang;
 
   Object.keys(translations).forEach(id => {
     const element = document.getElementById(id);
+
     if (element) {
       element.textContent = translations[id];
     }
   });
+
+  loadHomeNotices();
 }
-</script>
-  <body>
 
-<header>
-  <div style="text-align:right; width:100%; padding:8px 6%; background:#064e36;">
-  <button onclick="setLanguage('bn')">বাংলা</button>
-  <button onclick="setLanguage('en')">English</button>
-</div>
-  <div style="display:flex; align-items:center; gap:10px;">
-  <div style="
-    width:45px;
-    height:45px;
-    border-radius:50%;
-    background:#f5c542;
-    color:#075c3b;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    font-size:20px;
-    font-weight:bold;">
-    পা
-  </div>
-  <h2 id="orgName">পূর্ব আতাকরা সমাজ কল্যাণ</h2>
-    <p id="motto" style="font-size:12px; color:#e0f2e9;">ঐক্য • সহযোগিতা • মানবসেবা</p>
-</div>
-  <nav>
-    <a id="navHome" href="#home">হোম</a>
-<a id="navAbout" href="#about">আমাদের সম্পর্কে</a>
-<a id="navServices" href="#services">কার্যক্রম</a>
-<a id="navContact" href="#contact">যোগাযোগ</a>
-  </nav>
-</header>
-<div id="homeLogoutArea" style="text-align:right; padding:10px 6%;">
-  <button id="homeLogoutBtn" style="
-    display:none;
-    background:#b83232;
-    color:white;
-    border:0;
-    padding:10px 18px;
-    border-radius:7px;
-    font-weight:bold;">
-    লগআউট
-  </button>
-</div>
-
-<div class="hero" id="home">
-  <div style="
-    display:inline-block;
-    padding:7px 18px;
-    border:1px solid #ffffff80;
-    border-radius:30px;
-    margin-bottom:18px;
-    font-size:14px;">
-    <div id="welcomeText">
-  স্বাগতম — আমাদের সামাজিক পরিবারে
-</div>
-
-<h1 id="heroTitle">পূর্ব আতাকরা সমাজ কল্যাণ</h1>
-  <p id="heroSlogan">ঐক্য, সহযোগিতা ও মানবসেবায় গড়ে উঠুক সুন্দর সমাজ।</p>
-
-  <div style="margin-top:25px;">
-  <div style="margin-top:25px;">
-  <a id="loginLink" class="btn" href="login.html">🔐 সদস্য লগইন</a>
-
-  <a id="registerLink" class="btn" href="register.html">📝 সদস্য নিবন্ধন</a>
-
-  <a id="adminLink" class="btn" href="admin.html">⚙️ অ্যাডমিন ড্যাশবোর্ড</a>
-
-  <a id="aboutLink" class="btn" href="#about">আমাদের সম্পর্কে</a>
-
-  <a id="contactLink" class="btn" href="#contact">যোগাযোগ করুন</a>
-</div>
-</div>
-
-<section style="padding:25px 15px; background:#e5f3eb;">
-  <h2 id="membersHeading" style="color:#075c3b;">আমাদের সদস্য</h2>
-  <p style="font-size:30px; font-weight:bold; color:#08764b;">
-    <span id="totalMembers">লোড হচ্ছে...</span>
-  </p>
-<p id="memberUnit">জন অনুমোদিত সদস্য</p>
-</section>
-<section style="background:#fff8df; padding:30px 7%;">
-  <h2 id="noticeHeading" style="color:#8a6500;">📢 নোটিশ বোর্ড</h2>
-
-  <div id="homeNotices">
-    নোটিশ লোড হচ্ছে...
-  </div>
-</section>
-  <section id="about">
-  <h2 id="aboutHeading">আমাদের সম্পর্কে</h2>
-  <p id="aboutText">
-  পূর্ব আতাকরা সমাজ কল্যাণ একটি সামাজিক উদ্যোগ।
-  সমাজের মানুষের মধ্যে ঐক্য, সহযোগিতা ও কল্যাণমূলক
-  কার্যক্রমকে এগিয়ে নেওয়াই আমাদের লক্ষ্য।
-</p>
-</section>
-
-<section id="services">
-  <h2 id="servicesHeading">আমাদের কার্যক্রম</h2>
-  <div class="cards">
-    <div class="card">
-      <h3 id="service1Title">সদস্য ব্যবস্থাপনা</h3>
-<p id="service1Text">সদস্যদের তথ্য সংরক্ষণ ও পরিচালনা।</p>
-</div>
-
-<div class="card">
-  <h3 id="service2Title">সামাজিক সহযোগিতা</h3>
-  <p id="service2Text">সমাজের মানুষের পাশে দাঁড়ানো।</p>
-</div>
-
-<div class="card">
-  <h3 id="service3Title">মানবসেবা</h3>
-  <p id="service3Text">মানবিক ও কল্যাণমূলক কাজে অংশগ্রহণ।</p>
-</div>
-</div>
-</section>
-
-<section id="contact">
-  <h2 id="contactHeading">যোগাযোগ</h2>
-  <p id="contactOrgName">পূর্ব আতাকরা সমাজ কল্যাণ</p>
-  <p id="contactInfo">যোগাযোগের তথ্য শীঘ্রই যুক্ত করা হবে।</p>
-</section>
-
-<footer>
-  <p id="footerText">© 2026 পূর্ব আতাকরা সমাজ কল্যাণ। সর্বস্বত্ব সংরক্ষিত।</p>
-</footer>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="supabase-config.js"></script><div style="text-align:center; margin:20px;">
-  <script>
 async function loadTotalMembers() {
+  const display = document.getElementById("totalMembers");
+
   const { count, error } = await supabaseClient
     .from("members")
     .select("id", { count: "exact", head: true })
     .eq("approval_status", "approved");
 
-  const display = document.getElementById("totalMembers");
-
   if (error) {
-    display.textContent = "লোড হয়নি";
+    display.textContent = homeTranslations[currentHomeLanguage].memberError;
     console.log("সদস্য সংখ্যা সমস্যা:", error.message);
     return;
   }
@@ -324,9 +560,6 @@ async function loadTotalMembers() {
   display.textContent = count ?? 0;
 }
 
-loadTotalMembers();
-</script>
-  <script>
 async function checkHomeLogin() {
   const { data } = await supabaseClient.auth.getSession();
 
@@ -339,8 +572,6 @@ async function checkHomeLogin() {
   }
 }
 
-checkHomeLogin();
-
 document.getElementById("homeLogoutBtn").addEventListener("click", async () => {
   const { error } = await supabaseClient.auth.signOut();
 
@@ -352,10 +583,12 @@ document.getElementById("homeLogoutBtn").addEventListener("click", async () => {
   alert("সফলভাবে লগআউট হয়েছে।");
   window.location.href = "login.html";
 });
-  </script>
-  <script>
+
 async function loadHomeNotices() {
   const noticeBox = document.getElementById("homeNotices");
+  const t = homeTranslations[currentHomeLanguage];
+
+  noticeBox.textContent = t.noticeLoading;
 
   const { data, error } = await supabaseClient
     .from("notices")
@@ -364,21 +597,21 @@ async function loadHomeNotices() {
     .order("created_at", { ascending: false });
 
   if (error) {
-    noticeBox.textContent = "নোটিশ লোড করা যায়নি।";
+    noticeBox.textContent = t.noticeError;
+    console.log("নোটিশ সমস্যা:", error.message);
     return;
   }
 
   noticeBox.replaceChildren();
 
   if (!data || data.length === 0) {
-    noticeBox.textContent = "বর্তমানে কোনো নোটিশ নেই।";
+    noticeBox.textContent = t.noNotices;
     return;
   }
 
   data.forEach(notice => {
     const card = document.createElement("div");
-    card.style.cssText =
-      "background:white;padding:18px;border-radius:10px;margin:12px 0;text-align:left;";
+    card.className = "notice-card";
 
     const title = document.createElement("h3");
     title.textContent = notice.title;
@@ -387,37 +620,19 @@ async function loadHomeNotices() {
     content.textContent = notice.content;
 
     const date = document.createElement("small");
-    date.textContent = new Date(notice.created_at).toLocaleDateString("bn-BD");
+    date.textContent = new Date(notice.created_at).toLocaleDateString(
+      currentHomeLanguage === "en" ? "en-US" : "bn-BD"
+    );
 
     card.append(title, content, date);
     noticeBox.appendChild(card);
   });
 }
 
+loadTotalMembers();
+checkHomeLogin();
 loadHomeNotices();
-  </script>
-  <a href="members.html" style="
-    display:inline-block;
-    background:#087f5b;
-    color:white;
-    padding:12px 22px;
-    border-radius:8px;
-    text-decoration:none;
-    font-weight:bold;">
-    সদস্য তালিকা দেখুন
-  </a>
-</div>
-  <div style="text-align:center; margin:20px;">
-  <a href="posts.html" style="
-    display:inline-block;
-    background:#176b3a;
-    color:white;
-    padding:12px 22px;
-    border-radius:8px;
-    text-decoration:none;
-    font-weight:bold;">
-    সদস্যদের পোস্ট দেখুন
-  </a>
-  </div>
+</script>
+
 </body>
-    </html>
+</html>
