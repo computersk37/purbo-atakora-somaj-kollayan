@@ -96,7 +96,90 @@ nav a:hover {
     }
   </style>
 </head>
-<body>
+<script>
+const homeTranslations = {
+  bn: {
+    orgName: "পূর্ব আতাকরা সমাজ কল্যাণ",
+    motto: "ঐক্য • সহযোগিতা • মানবসেবা",
+    navHome: "হোম",
+    navAbout: "আমাদের সম্পর্কে",
+    navServices: "কার্যক্রম",
+    navContact: "যোগাযোগ",
+    welcomeText: "স্বাগতম — আমাদের সামাজিক পরিবারে",
+    heroTitle: "পূর্ব আতাকরা সমাজ কল্যাণ",
+    heroSlogan: "ঐক্য, সহযোগিতা ও মানবসেবায় গড়ে উঠুক সুন্দর সমাজ।",
+    loginLink: "🔐 সদস্য লগইন",
+    registerLink: "📝 সদস্য নিবন্ধন",
+    adminLink: "⚙️ অ্যাডমিন ড্যাশবোর্ড",
+    aboutLink: "আমাদের সম্পর্কে",
+    contactLink: "যোগাযোগ করুন",
+    membersHeading: "আমাদের সদস্য",
+    memberUnit: "জন অনুমোদিত সদস্য",
+    noticeHeading: "📢 নোটিশ বোর্ড",
+    aboutHeading: "আমাদের সম্পর্কে",
+    aboutText: "পূর্ব আতাকরা সমাজ কল্যাণ একটি সামাজিক উদ্যোগ। সমাজের মানুষের মধ্যে ঐক্য, সহযোগিতা ও কল্যাণমূলক কার্যক্রমকে এগিয়ে নেওয়াই আমাদের লক্ষ্য।",
+    servicesHeading: "আমাদের কার্যক্রম",
+    service1Title: "সদস্য ব্যবস্থাপনা",
+    service1Text: "সদস্যদের তথ্য সংরক্ষণ ও পরিচালনা।",
+    service2Title: "সামাজিক সহযোগিতা",
+    service2Text: "সমাজের মানুষের পাশে দাঁড়ানো।",
+    service3Title: "মানবসেবা",
+    service3Text: "মানবিক ও কল্যাণমূলক কাজে অংশগ্রহণ।",
+    contactHeading: "যোগাযোগ",
+    contactOrgName: "পূর্ব আতাকরা সমাজ কল্যাণ",
+    contactInfo: "যোগাযোগের তথ্য শীঘ্রই যুক্ত করা হবে।",
+    footerText: "© 2026 পূর্ব আতাকরা সমাজ কল্যাণ। সর্বস্বত্ব সংরক্ষিত।"
+  },
+
+  en: {
+    orgName: "Purbo Atakora Social Welfare",
+    motto: "Unity • Cooperation • Humanity",
+    navHome: "Home",
+    navAbout: "About Us",
+    navServices: "Activities",
+    navContact: "Contact",
+    welcomeText: "Welcome to our social family",
+    heroTitle: "Purbo Atakora Social Welfare",
+    heroSlogan: "Building a better society through unity, cooperation and humanity.",
+    loginLink: "🔐 Member Login",
+    registerLink: "📝 Member Registration",
+    adminLink: "⚙️ Admin Dashboard",
+    aboutLink: "About Us",
+    contactLink: "Contact Us",
+    membersHeading: "Our Members",
+    memberUnit: "Approved Members",
+    noticeHeading: "📢 Notice Board",
+    aboutHeading: "About Us",
+    aboutText: "Purbo Atakora Social Welfare is a social initiative. Our goal is to promote unity, cooperation and welfare activities among community members.",
+    servicesHeading: "Our Activities",
+    service1Title: "Member Management",
+    service1Text: "Maintaining and managing member information.",
+    service2Title: "Social Cooperation",
+    service2Text: "Standing beside the people in our community.",
+    service3Title: "Humanitarian Service",
+    service3Text: "Participating in humanitarian and welfare activities.",
+    contactHeading: "Contact",
+    contactOrgName: "Purbo Atakora Social Welfare",
+    contactInfo: "Contact information will be added soon.",
+    footerText: "© 2026 Purbo Atakora Social Welfare. All rights reserved."
+  }
+};
+
+function setLanguage(lang) {
+  const translations = homeTranslations[lang];
+  if (!translations) return;
+
+  document.documentElement.lang = lang === "en" ? "en" : "bn";
+
+  Object.keys(translations).forEach(id => {
+    const element = document.getElementById(id);
+    if (element) {
+      element.textContent = translations[id];
+    }
+  });
+}
+</script>
+  <body>
 
 <header>
   <div style="text-align:right; width:100%; padding:8px 6%; background:#064e36;">
