@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>সদস্য নিবন্ধন - পূর্ব আতাকরা সমাজ কল্যাণ</title>
+
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -11,6 +12,7 @@
       padding: 20px;
       color: #18352a;
     }
+
     .form-box {
       max-width: 480px;
       margin: 25px auto;
@@ -19,8 +21,17 @@
       border-radius: 12px;
       box-shadow: 0 3px 15px #0001;
     }
-    h2 { text-align: center; color: #075c3b; }
-    label { display: block; margin-top: 13px; }
+
+    h2 {
+      text-align: center;
+      color: #075c3b;
+    }
+
+    label {
+      display: block;
+      margin-top: 13px;
+    }
+
     input, textarea, select {
       width: 100%;
       padding: 12px;
@@ -29,6 +40,7 @@
       border-radius: 6px;
       box-sizing: border-box;
     }
+
     button {
       width: 100%;
       margin-top: 20px;
@@ -38,15 +50,84 @@
       border: 0;
       border-radius: 7px;
       font-size: 16px;
+      cursor: pointer;
     }
-    #message { margin-top: 15px; text-align: center; }
+
+    #message {
+      margin-top: 15px;
+      text-align: center;
+    }
+
+    .print-area {
+      display: none;
+      max-width: 650px;
+      margin: 25px auto;
+      padding: 25px;
+      background: white;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+    }
+
+    .print-area h2 {
+      text-align: center;
+    }
+
+    .print-row {
+      padding: 10px 0;
+      border-bottom: 1px solid #ddd;
+      line-height: 1.6;
+    }
+
+    .print-row strong {
+      display: inline-block;
+      min-width: 130px;
+    }
+
+    .approved-status {
+      text-align: center;
+      color: #08783f;
+      font-weight: bold;
+      margin: 18px 0;
+    }
+
+    @media print {
+      body * {
+        visibility: hidden;
+      }
+
+      #printArea,
+      #printArea * {
+        visibility: visible;
+      }
+
+      #printArea {
+        display: block !important;
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        max-width: none;
+        margin: 0;
+        padding: 20px;
+        border: none;
+        box-shadow: none;
+        box-sizing: border-box;
+      }
+
+      .no-print {
+        display: none !important;
+      }
+    }
   </style>
 </head>
+
 <body>
+
 <div class="form-box">
   <h2>সদস্য নিবন্ধন আবেদন</h2>
 
   <form id="registerForm">
+
     <label>পূর্ণ নাম</label>
     <input id="name" required>
 
@@ -61,56 +142,154 @@
 
     <label>মোবাইল নম্বর</label>
     <input id="phone" type="tel" required>
-<label>পেশা</label>
-<select id="occupation" required>
-  <option value="">পেশা নির্বাচন করুন</option>
-  <option value="চাকরিজীবী">চাকরিজীবী</option>
-  <option value="ব্যবসায়ী">ব্যবসায়ী</option>
-  <option value="কৃষক">কৃষক</option>
-  <option value="ছাত্র/ছাত্রী">ছাত্র/ছাত্রী</option>
-  <option value="শ্রমিক">শ্রমিক</option>
-  <option value="অন্যান্য">অন্যান্য</option>
-</select>
 
-<label>রক্তের গ্রুপ</label>
-<select id="blood_group" required>
-  <option value="">রক্তের গ্রুপ নির্বাচন করুন</option>
-  <option value="A+">A+</option>
-  <option value="A-">A-</option>
-  <option value="B+">B+</option>
-  <option value="B-">B-</option>
-  <option value="AB+">AB+</option>
-  <option value="AB-">AB-</option>
-  <option value="O+">O+</option>
-  <option value="O-">O-</option>
-</select>
+    <label>পেশা</label>
+    <select id="occupation" required>
+      <option value="">পেশা নির্বাচন করুন</option>
+      <option value="চাকরিজীবী">চাকরিজীবী</option>
+      <option value="ব্যবসায়ী">ব্যবসায়ী</option>
+      <option value="কৃষক">কৃষক</option>
+      <option value="ছাত্র/ছাত্রী">ছাত্র/ছাত্রী</option>
+      <option value="শ্রমিক">শ্রমিক</option>
+      <option value="অন্যান্য">অন্যান্য</option>
+    </select>
 
-<label>আপনি কি প্রবাসী?</label>
-<select id="is_expat" required>
-  <option value="">নির্বাচন করুন</option>
-  <option value="হ্যাঁ">হ্যাঁ</option>
-  <option value="না">না</option>
-</select>
+    <label>রক্তের গ্রুপ</label>
+    <select id="blood_group" required>
+      <option value="">রক্তের গ্রুপ নির্বাচন করুন</option>
+      <option value="A+">A+</option>
+      <option value="A-">A-</option>
+      <option value="B+">B+</option>
+      <option value="B-">B-</option>
+      <option value="AB+">AB+</option>
+      <option value="AB-">AB-</option>
+      <option value="O+">O+</option>
+      <option value="O-">O-</option>
+    </select>
 
-<label>প্রবাসী হলে কোন দেশে থাকেন?</label>
-<input id="country" type="text"
-placeholder="দেশের নাম লিখুন (ঐচ্ছিক)">
+    <label>আপনি কি প্রবাসী?</label>
+    <select id="is_expat" required>
+      <option value="">নির্বাচন করুন</option>
+      <option value="হ্যাঁ">হ্যাঁ</option>
+      <option value="না">না</option>
+    </select>
+
+    <label>প্রবাসী হলে কোন দেশে থাকেন?</label>
+    <input id="country" type="text"
+      placeholder="দেশের নাম লিখুন (ঐচ্ছিক)">
+
     <label>বিস্তারিত (ঐচ্ছিক)</label>
     <textarea id="details"></textarea>
-<label>প্রোফাইল ছবি (ঐচ্ছিক)</label>
-<input type="file" id="photo" accept="image/*">
+
+    <label>প্রোফাইল ছবি (ঐচ্ছিক)</label>
+    <input type="file" id="photo" accept="image/*">
+
     <button type="submit">আবেদন জমা দিন</button>
   </form>
 
   <p id="message"></p>
 </div>
 
+<!-- আবেদনপত্র প্রিন্ট করার অংশ -->
+<div id="printArea" class="print-area"></div>
+
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="supabase-config.js"></script>
- <script>
+
+<script>
 const form = document.getElementById("registerForm");
 const message = document.getElementById("message");
+const printArea = document.getElementById("printArea");
 
+// প্রিন্ট করার জন্য নিরাপদে লেখা তৈরি
+function escapeHTML(value) {
+  return String(value || "").replace(/[&<>"']/g, function(char) {
+    return {
+      "&": "&amp;",
+      "<": "&lt;",
+      ">": "&gt;",
+      '"': "&quot;",
+      "'": "&#039;"
+    }[char];
+  });
+}
+
+// আবেদনপত্র দেখানো
+function showPrintableApplication(draft, email) {
+  const applicationDate = new Date().toLocaleDateString("bn-BD");
+
+  printArea.innerHTML = `
+    <h2>পূর্ব আতাকরা সমাজ কল্যাণ</h2>
+    <h3 style="text-align:center;">সদস্য নিবন্ধন আবেদনপত্র</h3>
+
+    <p class="approved-status">
+      আবেদন অনুমোদিত (Approved)
+    </p>
+
+    <div class="print-row">
+      <strong>আবেদনের তারিখ:</strong>
+      ${escapeHTML(applicationDate)}
+    </div>
+
+    <div class="print-row">
+      <strong>পূর্ণ নাম:</strong>
+      ${escapeHTML(draft.full_name)}
+    </div>
+
+    <div class="print-row">
+      <strong>ইমেইল:</strong>
+      ${escapeHTML(email)}
+    </div>
+
+    <div class="print-row">
+      <strong>ঠিকানা:</strong>
+      ${escapeHTML(draft.address)}
+    </div>
+
+    <div class="print-row">
+      <strong>মোবাইল নম্বর:</strong>
+      ${escapeHTML(draft.phone)}
+    </div>
+
+    <div class="print-row">
+      <strong>পেশা:</strong>
+      ${escapeHTML(draft.occupation)}
+    </div>
+
+    <div class="print-row">
+      <strong>রক্তের গ্রুপ:</strong>
+      ${escapeHTML(draft.blood_group)}
+    </div>
+
+    <div class="print-row">
+      <strong>প্রবাসী:</strong>
+      ${escapeHTML(draft.is_expat)}
+    </div>
+
+    <div class="print-row">
+      <strong>দেশ:</strong>
+      ${escapeHTML(draft.country || "প্রযোজ্য নয়")}
+    </div>
+
+    <div class="print-row">
+      <strong>বিস্তারিত:</strong>
+      ${escapeHTML(draft.details || "উল্লেখ নেই")}
+    </div>
+
+    <p style="text-align:center; margin-top:30px;">
+      পূর্ব আতাকরা সমাজ কল্যাণ
+    </p>
+
+    <button type="button" class="no-print"
+      onclick="window.print()">
+      আবেদনপত্র প্রিন্ট করুন
+    </button>
+  `;
+
+  printArea.style.display = "block";
+}
+
+// আবেদন জমা দেওয়া
 async function submitApplication(user, draft, photoFile = null) {
   let photoPath = null;
 
@@ -140,20 +319,22 @@ async function submitApplication(user, draft, photoFile = null) {
   }
 
   const { error } = await supabaseClient
-  .from("member_applications")
-  .insert({
-    user_id: user.id,
-    full_name: draft.full_name,
-    address: draft.address,
-    phone: draft.phone,
-    occupation: draft.occupation,
-    blood_group: draft.blood_group,
-    is_expat: draft.is_expat,
-    country: draft.country,
-    details: draft.details,
-    photo_url: photoPath,
-    approval_status: "pending"
-  });
+    .from("member_applications")
+    .insert({
+      user_id: user.id,
+      full_name: draft.full_name,
+      address: draft.address,
+      phone: draft.phone,
+      occupation: draft.occupation,
+      blood_group: draft.blood_group,
+      is_expat: draft.is_expat,
+      country: draft.country,
+      details: draft.details,
+      photo_url: photoPath,
+
+      // স্বয়ংক্রিয় অনুমোদন
+      approval_status: "approved"
+    });
 
   if (error) throw error;
 
@@ -161,26 +342,29 @@ async function submitApplication(user, draft, photoFile = null) {
   localStorage.removeItem("pending_member_email");
 
   message.textContent =
-    "আপনার আবেদন সফলভাবে জমা হয়েছে। অ্যাডমিনের অনুমোদনের অপেক্ষা করুন।";
+    "অভিনন্দন! আপনার সদস্য আবেদন সফলভাবে জমা হয়েছে এবং অনুমোদিত হয়েছে।";
+
+  showPrintableApplication(draft, user.email);
 
   form.reset();
 }
 
+// ফর্ম জমা
 form.addEventListener("submit", async function(e) {
   e.preventDefault();
 
   message.textContent = "আবেদন প্রক্রিয়া চলছে...";
 
   const draft = {
-  full_name: document.getElementById("name").value.trim(),
-  address: document.getElementById("address").value.trim(),
-  phone: document.getElementById("phone").value.trim(),
-  occupation: document.getElementById("occupation").value,
-  blood_group: document.getElementById("blood_group").value,
-  is_expat: document.getElementById("is_expat").value,
-  country: document.getElementById("country").value.trim(),
-  details: document.getElementById("details").value.trim()
-};
+    full_name: document.getElementById("name").value.trim(),
+    address: document.getElementById("address").value.trim(),
+    phone: document.getElementById("phone").value.trim(),
+    occupation: document.getElementById("occupation").value,
+    blood_group: document.getElementById("blood_group").value,
+    is_expat: document.getElementById("is_expat").value,
+    country: document.getElementById("country").value.trim(),
+    details: document.getElementById("details").value.trim()
+  };
 
   const photoFile =
     document.getElementById("photo").files[0] || null;
@@ -194,7 +378,7 @@ form.addEventListener("submit", async function(e) {
     const saved =
       localStorage.getItem("pending_member_application");
 
-    // ইমেইল যাচাইয়ের পর আগের অ্যাকাউন্ট দিয়ে আবেদন জমা
+    // ইমেইল যাচাইয়ের পর আবেদন জমা
     if (sessionData.session && saved) {
       await submitApplication(
         sessionData.session.user,
@@ -229,7 +413,7 @@ form.addEventListener("submit", async function(e) {
       await submitApplication(data.user, draft, photoFile);
     } else {
       message.textContent =
-        "অ্যাকাউন্ট তৈরি হয়েছে। ইমেইলে পাঠানো লিংকে চাপ দিয়ে যাচাই করুন। এরপর এই পেজে ফিরে এসে ছবি নির্বাচন করে আবেদন জমা দিন।";
+        "অ্যাকাউন্ট তৈরি হয়েছে। ইমেইলে পাঠানো যাচাই লিংকে চাপ দিন। এরপর এই পেজে ফিরে এসে ছবি নির্বাচন করে আবার আবেদন জমা দিন।";
     }
 
   } catch (error) {
@@ -237,7 +421,7 @@ form.addEventListener("submit", async function(e) {
   }
 });
 
-// ইমেইল যাচাইয়ের পর আগের তথ্য ফর্মে ফিরিয়ে আনা
+// ইমেইল যাচাইয়ের পর আগের তথ্য ফিরিয়ে আনা
 (async function checkVerifiedUser() {
   try {
     const { data, error } =
@@ -260,6 +444,18 @@ form.addEventListener("submit", async function(e) {
       document.getElementById("phone").value =
         draft.phone || "";
 
+      document.getElementById("occupation").value =
+        draft.occupation || "";
+
+      document.getElementById("blood_group").value =
+        draft.blood_group || "";
+
+      document.getElementById("is_expat").value =
+        draft.is_expat || "";
+
+      document.getElementById("country").value =
+        draft.country || "";
+
       document.getElementById("details").value =
         draft.details || "";
 
@@ -269,7 +465,7 @@ form.addEventListener("submit", async function(e) {
       document.getElementById("password").required = false;
 
       message.textContent =
-        "ইমেইল যাচাই হয়েছে। এবার প্রোফাইল ছবি নির্বাচন করে আবেদন জমা দিন।";
+        "ইমেইল যাচাই হয়েছে। এবার ছবি নির্বাচন করে আবেদন জমা দিন।";
     }
 
   } catch (error) {
@@ -277,5 +473,6 @@ form.addEventListener("submit", async function(e) {
   }
 })();
 </script>
+
 </body>
 </html>
