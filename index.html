@@ -21,76 +21,76 @@
       line-height: 1.7;
     }
 
-header {
-  background: #064e36;
-  color: white;
-  padding: 18px 5%;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 18px;
-  box-shadow: 0 3px 12px #0002;
-}
+    header {
+      background: #064e36;
+      color: white;
+      padding: 18px 5%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 18px;
+      box-shadow: 0 3px 12px #0002;
+    }
 
-.language-bar {
-  width: 100%;
-  text-align: right;
-}
+    .language-bar {
+      width: 100%;
+      text-align: right;
+    }
 
-.language-bar button {
-  padding: 8px 16px;
-  border: none;
-  border-radius: 8px;
-  margin-left: 6px;
-  font-weight: bold;
-  cursor: pointer;
-}
+    .language-bar button {
+      padding: 8px 16px;
+      border: none;
+      border-radius: 8px;
+      margin-left: 6px;
+      font-weight: bold;
+      cursor: pointer;
+    }
 
-.brand {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-}
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
 
-.logo {
-  width: 75px;
-  height: 75px;
-  object-fit: contain;
-  border-radius: 50%;
-  background: white;
-  border: 2px solid #f5c542;
-  flex-shrink: 0;
-}
+    .logo {
+      width: 75px;
+      height: 75px;
+      object-fit: contain;
+      border-radius: 50%;
+      background: white;
+      border: 2px solid #f5c542;
+      flex-shrink: 0;
+    }
 
-header h2 {
-  font-size: 22px;
-  line-height: 1.4;
-}
+    header h2 {
+      font-size: 22px;
+      line-height: 1.4;
+    }
 
-.motto {
-  font-size: 13px;
-  color: #e0f2e9;
-  margin-top: 3px;
-}
+    .motto {
+      font-size: 13px;
+      color: #e0f2e9;
+      margin-top: 3px;
+    }
 
-nav {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 18px;
-  align-items: center;
-}
+    nav {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 18px;
+      align-items: center;
+    }
 
-nav a {
-  color: white;
-  text-decoration: none;
-  font-weight: bold;
-  font-size: 15px;
-}
+    nav a {
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
+      font-size: 15px;
+    }
 
-nav a:hover {
-  color: #f5c542;
-}
+    nav a:hover {
+      color: #f5c542;
+    }
 
     .hero {
       text-align: center;
@@ -213,20 +213,36 @@ nav a:hover {
       padding: 22px;
     }
 
+    /* উপরে সদস্য তালিকা ও পোস্ট বাটন */
     .extra-links {
       text-align: center;
-      margin: 20px;
+      padding: 15px 10px;
+      background: #e5f3eb;
     }
 
     .extra-links a {
       display: inline-block;
-      background: #087f5b;
       color: white;
-      padding: 12px 22px;
-      border-radius: 8px;
+      padding: 13px 22px;
+      border-radius: 10px;
       text-decoration: none;
       font-weight: bold;
-      margin: 5px;
+      margin: 6px;
+      box-shadow: 0 3px 8px #0002;
+      transition: 0.3s;
+    }
+
+    .extra-links a:first-child {
+      background: #087f5b;
+    }
+
+    .extra-links a:last-child {
+      background: #176b3a;
+    }
+
+    .extra-links a:hover {
+      transform: translateY(-2px);
+      opacity: 0.9;
     }
 
     #homeLogoutArea {
@@ -245,89 +261,103 @@ nav a:hover {
       cursor: pointer;
     }
 
-    @media (max-width: 600px) {
-  header {
-    flex-direction: column;
-    justify-content: center;
-    text-align: center;
-    padding: 15px 12px;
-  }
-
-  .brand {
-    flex-direction: column;
-    justify-content: center;
-    gap: 8px;
-    width: 100%;
-  }
-
-  .logo {
-    width: 85px;
-    height: 85px;
-  }
-
-  header h2 {
-    font-size: 21px;
-  }
-
-  .motto {
-    font-size: 13px;
-  }
-
-  nav {
-    justify-content: center;
-    gap: 12px;
-    width: 100%;
-  }
-
-  nav a {
-    font-size: 14px;
-  }
-
-  .hero {
-    padding: 45px 15px;
-  }
-
-  .hero h1 {
-    font-size: 26px;
-  }
-
-  .hero p {
-    font-size: 15px;
-  }
-
-  .cards {
-    grid-template-columns: 1fr;
-  }
-
-  section {
-    padding: 35px 6%;
-  }
-}
+    /* ক্রিয়েটর পরিচিতি */
     .creator-credit {
-  text-align: center;
-  padding: 20px 10px;
-  margin-top: 10px;
-}
+      text-align: center;
+      padding: 20px 10px;
+      margin-top: 10px;
+    }
 
-.creator-credit p {
-  color: #f5c542;
-  font-size: 14px;
-  letter-spacing: 2px;
-  margin-bottom: 8px;
-}
+    .creator-credit p {
+      color: #f5c542;
+      font-size: 14px;
+      letter-spacing: 2px;
+      margin-bottom: 8px;
+    }
 
-.creator-credit h3 {
-  color: white;
-  font-size: 22px;
-  font-weight: bold;
-  margin: 8px 0;
-}
+    .creator-credit h3 {
+      color: white;
+      font-size: 22px;
+      font-weight: bold;
+      margin: 8px 0;
+    }
 
-.creator-credit span {
-  color: #c8e6d5;
-  font-size: 13px;
-  letter-spacing: 1px;
-}
+    .creator-credit span {
+      color: #c8e6d5;
+      font-size: 13px;
+      letter-spacing: 1px;
+    }
+
+    /* মোবাইল ডিজাইন */
+    @media (max-width: 600px) {
+      header {
+        flex-direction: column;
+        justify-content: center;
+        text-align: center;
+        padding: 15px 12px;
+      }
+
+      .brand {
+        flex-direction: column;
+        justify-content: center;
+        gap: 8px;
+        width: 100%;
+      }
+
+      .logo {
+        width: 85px;
+        height: 85px;
+      }
+
+      header h2 {
+        font-size: 21px;
+      }
+
+      .motto {
+        font-size: 13px;
+      }
+
+      nav {
+        justify-content: center;
+        gap: 12px;
+        width: 100%;
+      }
+
+      nav a {
+        font-size: 14px;
+      }
+
+      .extra-links {
+        padding: 12px 8px;
+      }
+
+      .extra-links a {
+        display: block;
+        width: 100%;
+        max-width: 320px;
+        margin: 8px auto;
+      }
+
+      .hero {
+        padding: 45px 15px;
+      }
+
+      .hero h1 {
+        font-size: 26px;
+      }
+
+      .hero p {
+        font-size: 15px;
+      }
+
+      .cards {
+        grid-template-columns: 1fr;
+      }
+
+      section {
+        padding: 35px 6%;
+      }
+    }
   </style>
 </head>
 
@@ -341,7 +371,9 @@ nav a:hover {
   </div>
 
   <div class="brand">
-    <img src="file_00000000efe88211984c7a7fee7e28c5.png" alt="পূর্ব আতাকরা সমাজ কল্যাণ লোগো" class="logo">
+    <img src="file_00000000efe88211984c7a7fee7e28c5.png"
+         alt="পূর্ব আতাকরা সমাজ কল্যাণ লোগো"
+         class="logo">
 
     <div>
       <h2 id="orgName">পূর্ব আতাকরা সমাজ কল্যাণ</h2>
@@ -360,6 +392,19 @@ nav a:hover {
 
 <div id="homeLogoutArea">
   <button id="homeLogoutBtn">লগআউট</button>
+</div>
+
+<!-- সদস্য তালিকা ও পোস্ট বাটন এখন উপরে -->
+<div class="extra-links">
+
+  <a id="membersLink" href="members.html">
+    👥 সদস্য তালিকা দেখুন
+  </a>
+
+  <a id="postsLink" href="posts.html">
+    📰 সদস্যদের পোস্ট দেখুন
+  </a>
+
 </div>
 
 <div class="hero" id="home">
@@ -463,24 +508,13 @@ nav a:hover {
   <p id="footerText">
     © 2026 পূর্ব আতাকরা সমাজ কল্যাণ। সর্বস্বত্ব সংরক্ষিত।
   </p>
+
   <div class="creator-credit">
-  <p>✦ Designed & Developed by ✦</p>
-  <h3>Abu Bokkar Siddik</h3>
-  <span>Web Developer | Creative Designer</span>
-</div>
+    <p>✦ Designed & Developed by ✦</p>
+    <h3>Abu Bokkar Siddik</h3>
+    <span>Web Developer | Creative Designer</span>
+  </div>
 </footer>
-
-<div class="extra-links">
-
-  <a id="membersLink" href="members.html">
-    সদস্য তালিকা দেখুন
-  </a>
-
-  <a id="postsLink" href="posts.html" style="background:#176b3a;">
-    সদস্যদের পোস্ট দেখুন
-  </a>
-
-</div>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="supabase-config.js"></script>
@@ -521,8 +555,8 @@ const homeTranslations = {
     contactInfo: "যোগাযোগের তথ্য শীঘ্রই যুক্ত করা হবে।",
     footerText: "© 2026 পূর্ব আতাকরা সমাজ কল্যাণ। সর্বস্বত্ব সংরক্ষিত।",
     logout: "লগআউট",
-    membersLink: "সদস্য তালিকা দেখুন",
-    postsLink: "সদস্যদের পোস্ট দেখুন",
+    membersLink: "👥 সদস্য তালিকা দেখুন",
+    postsLink: "📰 সদস্যদের পোস্ট দেখুন",
     loading: "লোড হচ্ছে...",
     noticeLoading: "নোটিশ লোড হচ্ছে...",
     noNotices: "বর্তমানে কোনো নোটিশ নেই।",
@@ -562,8 +596,8 @@ const homeTranslations = {
     contactInfo: "Contact information will be added soon.",
     footerText: "© 2026 Purbo Atakora Social Welfare. All rights reserved.",
     logout: "Log out",
-    membersLink: "View Member Directory",
-    postsLink: "View Member Posts",
+    membersLink: "👥 View Member Directory",
+    postsLink: "📰 View Member Posts",
     loading: "Loading...",
     noticeLoading: "Loading notices...",
     noNotices: "There are currently no notices.",
