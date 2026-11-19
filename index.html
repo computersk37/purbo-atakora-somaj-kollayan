@@ -245,44 +245,64 @@ nav a:hover {
       cursor: pointer;
     }
 
-    @media(max-width: 600px) {
-      header {
-        justify-content: center;
-        text-align: center;
-      }
+    @media (max-width: 600px) {
+  header {
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    padding: 15px 12px;
+  }
 
-      .brand {
-        justify-content: center;
-      }
+  .brand {
+    flex-direction: column;
+    justify-content: center;
+    gap: 8px;
+    width: 100%;
+  }
 
-      nav {
-        justify-content: center;
-      }
+  .logo {
+    width: 85px;
+    height: 85px;
+  }
 
-      nav a {
-        font-size: 14px;
-      }
+  header h2 {
+    font-size: 21px;
+  }
 
-      .hero {
-        padding: 55px 15px;
-      }
+  .motto {
+    font-size: 13px;
+  }
 
-      .hero h1 {
-        font-size: 27px;
-      }
+  nav {
+    justify-content: center;
+    gap: 12px;
+    width: 100%;
+  }
 
-      .hero p {
-        font-size: 15px;
-      }
+  nav a {
+    font-size: 14px;
+  }
 
-      .cards {
-        grid-template-columns: 1fr;
-      }
+  .hero {
+    padding: 45px 15px;
+  }
 
-      section {
-        padding: 35px 6%;
-      }
-    }
+  .hero h1 {
+    font-size: 26px;
+  }
+
+  .hero p {
+    font-size: 15px;
+  }
+
+  .cards {
+    grid-template-columns: 1fr;
+  }
+
+  section {
+    padding: 35px 6%;
+  }
+}
   </style>
 </head>
 
