@@ -62,32 +62,8 @@
       display: none;
       max-width: 650px;
       margin: 25px auto;
-      padding: 25px;
       background: white;
-      border: 1px solid #ccc;
-      border-radius: 10px;
-    }
-
-    .print-area h2 {
-      text-align: center;
-    }
-
-    .print-row {
-      padding: 10px 0;
-      border-bottom: 1px solid #ddd;
-      line-height: 1.6;
-    }
-
-    .print-row strong {
-      display: inline-block;
-      min-width: 130px;
-    }
-
-    .approved-status {
-      text-align: center;
-      color: #08783f;
-      font-weight: bold;
-      margin: 18px 0;
+      border-radius: 14px;
     }
 
     @media print {
@@ -108,14 +84,18 @@
         width: 100%;
         max-width: none;
         margin: 0;
-        padding: 20px;
+        padding: 0;
         border: none;
         box-shadow: none;
-        box-sizing: border-box;
       }
 
       .no-print {
         display: none !important;
+      }
+
+      #printArea {
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
       }
     }
   </style>
@@ -190,7 +170,7 @@
   <p id="message"></p>
 </div>
 
-<!-- আবেদনপত্র প্রিন্ট করার অংশ -->
+<!-- রঙিন আবেদনপত্র -->
 <div id="printArea" class="print-area"></div>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -201,7 +181,7 @@ const form = document.getElementById("registerForm");
 const message = document.getElementById("message");
 const printArea = document.getElementById("printArea");
 
-// প্রিন্ট করার জন্য নিরাপদে লেখা তৈরি
+// নিরাপদে লেখা দেখানোর জন্য
 function escapeHTML(value) {
   return String(value || "").replace(/[&<>"']/g, function(char) {
     return {
@@ -214,86 +194,186 @@ function escapeHTML(value) {
   });
 }
 
-// আবেদনপত্র দেখানো
+// সুন্দর রঙিন আবেদনপত্র তৈরি
 function showPrintableApplication(draft, email) {
-  const applicationDate = new Date().toLocaleDateString("bn-BD");
+
+  const applicationDate =
+    new Date().toLocaleDateString("bn-BD");
+
+  const fields = [
+    ["আবেদনের তারিখ", applicationDate],
+    ["পূর্ণ নাম", draft.full_name],
+    ["ইমেইল", email],
+    ["ঠিকানা", draft.address],
+    ["মোবাইল নম্বর", draft.phone],
+    ["পেশা", draft.occupation],
+    ["রক্তের গ্রুপ", draft.blood_group],
+    ["প্রবাসী", draft.is_expat],
+    ["দেশ", draft.country || "প্রযোজ্য নয়"],
+    ["বিস্তারিত", draft.details || "উল্লেখ নেই"]
+  ];
 
   printArea.innerHTML = `
-    <h2>পূর্ব আতাকরা সমাজ কল্যাণ</h2>
-    <h3 style="text-align:center;">সদস্য নিবন্ধন আবেদনপত্র</h3>
 
-    <p class="approved-status">
-      আবেদন অনুমোদিত (Approved)
-    </p>
+    <div style="
+      border:3px solid #075c3b;
+      border-radius:14px;
+      overflow:hidden;
+      background:#ffffff;
+      font-family:Arial,sans-serif;
+    ">
 
-    <div class="print-row">
-      <strong>আবেদনের তারিখ:</strong>
-      ${escapeHTML(applicationDate)}
+      <div style="
+        background:#075c3b;
+        color:white;
+        text-align:center;
+        padding:25px 12px;
+      ">
+        <div style="font-size:32px;">🤝</div>
+
+        <h2 style="
+          color:#f5d46b;
+          margin:8px 0;
+          font-size:24px;
+        ">
+          পূর্ব আতাকরা সমাজ কল্যাণ
+        </h2>
+
+        <p style="
+          margin:5px 0;
+          color:#e7f5ec;
+        ">
+          ঐক্য • সহযোগিতা • কল্যাণ
+        </p>
+      </div>
+
+      <div style="padding:22px;">
+
+        <h3 style="
+          text-align:center;
+          color:#075c3b;
+          border-bottom:2px solid #d6b64c;
+          padding-bottom:12px;
+        ">
+          সদস্য নিবন্ধন আবেদনপত্র
+        </h3>
+
+        <div style="
+          text-align:center;
+          background:#e3f5e9;
+          color:#08783f;
+          padding:12px;
+          border-radius:8px;
+          font-weight:bold;
+          margin:18px 0;
+          border:1px solid #8bc9a1;
+        ">
+          ✓ আবেদন অনুমোদিত (APPROVED)
+        </div>
+
+        <div style="
+          background:#f6faf7;
+          border:1px solid #d5e6da;
+          border-radius:9px;
+          padding:12px;
+        ">
+
+          ${fields.map((item, index) => `
+            <div style="
+              display:flex;
+              flex-wrap:wrap;
+              gap:8px;
+              padding:12px 8px;
+              border-bottom:1px solid #dce8df;
+              background:${index % 2 === 0 ? "#ffffff" : "#f0f7f2"};
+              line-height:1.7;
+            ">
+              <strong style="
+                color:#075c3b;
+                min-width:125px;
+              ">
+                ${escapeHTML(item[0])}:
+              </strong>
+
+              <span style="color:#263d30;">
+                ${escapeHTML(item[1])}
+              </span>
+            </div>
+          `).join("")}
+
+        </div>
+
+        <div style="
+          text-align:center;
+          margin-top:30px;
+          color:#075c3b;
+        ">
+          <p style="font-weight:bold;font-size:17px;">
+            পূর্ব আতাকরা সমাজ কল্যাণ
+          </p>
+
+          <p style="font-size:12px;color:#777;">
+            সমাজের ঐক্য ও কল্যাণে আমরা অঙ্গীকারবদ্ধ
+          </p>
+        </div>
+
+        <div style="
+          display:flex;
+          justify-content:space-between;
+          gap:20px;
+          margin-top:40px;
+          color:#444;
+          text-align:center;
+          font-size:13px;
+        ">
+          <div style="
+            border-top:1px solid #888;
+            padding-top:8px;
+            width:45%;
+          ">
+            সদস্যের স্বাক্ষর
+          </div>
+
+          <div style="
+            border-top:1px solid #888;
+            padding-top:8px;
+            width:45%;
+          ">
+            কর্তৃপক্ষ
+          </div>
+        </div>
+
+        <button type="button"
+          class="no-print"
+          onclick="window.print()"
+          style="
+            width:100%;
+            margin-top:25px;
+            padding:14px;
+            background:#075c3b;
+            color:white;
+            border:0;
+            border-radius:8px;
+            font-size:16px;
+            font-weight:bold;
+          ">
+          🖨 আবেদনপত্র প্রিন্ট করুন
+        </button>
+
+      </div>
     </div>
-
-    <div class="print-row">
-      <strong>পূর্ণ নাম:</strong>
-      ${escapeHTML(draft.full_name)}
-    </div>
-
-    <div class="print-row">
-      <strong>ইমেইল:</strong>
-      ${escapeHTML(email)}
-    </div>
-
-    <div class="print-row">
-      <strong>ঠিকানা:</strong>
-      ${escapeHTML(draft.address)}
-    </div>
-
-    <div class="print-row">
-      <strong>মোবাইল নম্বর:</strong>
-      ${escapeHTML(draft.phone)}
-    </div>
-
-    <div class="print-row">
-      <strong>পেশা:</strong>
-      ${escapeHTML(draft.occupation)}
-    </div>
-
-    <div class="print-row">
-      <strong>রক্তের গ্রুপ:</strong>
-      ${escapeHTML(draft.blood_group)}
-    </div>
-
-    <div class="print-row">
-      <strong>প্রবাসী:</strong>
-      ${escapeHTML(draft.is_expat)}
-    </div>
-
-    <div class="print-row">
-      <strong>দেশ:</strong>
-      ${escapeHTML(draft.country || "প্রযোজ্য নয়")}
-    </div>
-
-    <div class="print-row">
-      <strong>বিস্তারিত:</strong>
-      ${escapeHTML(draft.details || "উল্লেখ নেই")}
-    </div>
-
-    <p style="text-align:center; margin-top:30px;">
-      পূর্ব আতাকরা সমাজ কল্যাণ
-    </p>
-
-    <button type="button" class="no-print"
-      onclick="window.print()">
-      আবেদনপত্র প্রিন্ট করুন
-    </button>
   `;
 
   printArea.style.display = "block";
 }
 
-// আবেদন জমা দেওয়া
+// আবেদন জমা
 async function submitApplication(user, draft, photoFile = null) {
+
   let photoPath = null;
 
   if (photoFile) {
+
     if (!photoFile.type.startsWith("image/")) {
       throw new Error("শুধু ছবির ফাইল নির্বাচন করুন।");
     }
@@ -331,8 +411,6 @@ async function submitApplication(user, draft, photoFile = null) {
       country: draft.country,
       details: draft.details,
       photo_url: photoPath,
-
-      // স্বয়ংক্রিয় অনুমোদন
       approval_status: "approved"
     });
 
@@ -351,6 +429,7 @@ async function submitApplication(user, draft, photoFile = null) {
 
 // ফর্ম জমা
 form.addEventListener("submit", async function(e) {
+
   e.preventDefault();
 
   message.textContent = "আবেদন প্রক্রিয়া চলছে...";
@@ -370,6 +449,7 @@ form.addEventListener("submit", async function(e) {
     document.getElementById("photo").files[0] || null;
 
   try {
+
     const { data: sessionData, error: sessionError } =
       await supabaseClient.auth.getSession();
 
@@ -380,11 +460,13 @@ form.addEventListener("submit", async function(e) {
 
     // ইমেইল যাচাইয়ের পর আবেদন জমা
     if (sessionData.session && saved) {
+
       await submitApplication(
         sessionData.session.user,
         draft,
         photoFile
       );
+
       return;
     }
 
@@ -410,20 +492,27 @@ form.addEventListener("submit", async function(e) {
     );
 
     if (data.session) {
+
       await submitApplication(data.user, draft, photoFile);
+
     } else {
+
       message.textContent =
         "অ্যাকাউন্ট তৈরি হয়েছে। ইমেইলে পাঠানো যাচাই লিংকে চাপ দিন। এরপর এই পেজে ফিরে এসে ছবি নির্বাচন করে আবার আবেদন জমা দিন।";
     }
 
   } catch (error) {
+
     message.textContent = "সমস্যা হয়েছে: " + error.message;
+
   }
 });
 
 // ইমেইল যাচাইয়ের পর আগের তথ্য ফিরিয়ে আনা
 (async function checkVerifiedUser() {
+
   try {
+
     const { data, error } =
       await supabaseClient.auth.getSession();
 
@@ -433,6 +522,7 @@ form.addEventListener("submit", async function(e) {
       localStorage.getItem("pending_member_application");
 
     if (data.session && saved) {
+
       const draft = JSON.parse(saved);
 
       document.getElementById("name").value =
@@ -469,8 +559,11 @@ form.addEventListener("submit", async function(e) {
     }
 
   } catch (error) {
+
     message.textContent = "সমস্যা হয়েছে: " + error.message;
+
   }
+
 })();
 </script>
 
