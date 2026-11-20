@@ -523,7 +523,7 @@ function showPrintableApplication(draft, email) {
           margin:18px 0;
           border:1px solid #e9d18c;
         ">
-          আবেদন জমা হয়েছে — অ্যাডমিনের অনুমোদনের অপেক্ষায়
+          আবেদন অনুমোদিত — আপনি আমাদের সদস্য
         </div>
 
         <div style="
@@ -653,7 +653,7 @@ async function submitApplication(user, draft, photoFile = null) {
   localStorage.removeItem("pending_member_email");
 
   showMessage(
-    "আপনার আবেদন সফলভাবে জমা হয়েছে। অ্যাডমিনের অনুমোদনের অপেক্ষা করুন।",
+    "অভিনন্দন! আপনার সদস্য নিবন্ধন সফল হয়েছে। আপনি এখন আমাদের অনুমোদিত সদস্য।"
     "success"
   );
 
