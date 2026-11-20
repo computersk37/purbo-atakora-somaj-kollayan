@@ -21,7 +21,6 @@
   }
   </script>
 
-  <!-- Organization Structured Data -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -42,21 +41,24 @@
 
     body {
       font-family: Arial, sans-serif;
-      background: #f4f8f5;
+      background: #f3f8f5;
       color: #18352a;
-      line-height: 1.7;
+      line-height: 1.8;
+      font-weight: 600;
     }
 
+    /* HEADER */
+
     header {
-      background: #064e36;
+      background: linear-gradient(135deg, #043d2a, #08764b);
       color: white;
-      padding: 18px 5%;
+      padding: 20px 5%;
       display: flex;
       justify-content: space-between;
       align-items: center;
       flex-wrap: wrap;
       gap: 18px;
-      box-shadow: 0 3px 12px #0002;
+      box-shadow: 0 5px 20px #0002;
     }
 
     .language-bar {
@@ -65,39 +67,50 @@
     }
 
     .language-bar button {
-      padding: 8px 16px;
+      padding: 9px 18px;
       border: none;
-      border-radius: 8px;
+      border-radius: 9px;
       margin-left: 6px;
-      font-weight: bold;
+      font-weight: 800;
       cursor: pointer;
+      background: #f5c542;
+      color: #18352a;
+      transition: 0.3s;
+    }
+
+    .language-bar button:hover {
+      transform: translateY(-2px);
+      background: #ffdc70;
     }
 
     .brand {
       display: flex;
       align-items: center;
-      gap: 14px;
+      gap: 15px;
     }
 
     .logo {
-      width: 75px;
-      height: 75px;
+      width: 82px;
+      height: 82px;
       object-fit: contain;
       border-radius: 50%;
       background: white;
-      border: 2px solid #f5c542;
+      border: 3px solid #f5c542;
       flex-shrink: 0;
+      box-shadow: 0 3px 15px #0002;
     }
 
     header h2 {
-      font-size: 22px;
-      line-height: 1.4;
+      font-size: 24px;
+      line-height: 1.5;
+      font-weight: 900;
     }
 
     .motto {
-      font-size: 13px;
+      font-size: 14px;
       color: #e0f2e9;
-      margin-top: 3px;
+      margin-top: 5px;
+      font-weight: 700;
     }
 
     nav {
@@ -110,94 +123,172 @@
     nav a {
       color: white;
       text-decoration: none;
-      font-weight: bold;
+      font-weight: 800;
       font-size: 15px;
+      transition: 0.3s;
     }
 
     nav a:hover {
       color: #f5c542;
     }
 
+    /* LOGOUT */
+
+    #homeLogoutArea {
+      text-align: right;
+      padding: 12px 6%;
+      background: #f3f8f5;
+    }
+
+    #homeLogoutBtn {
+      display: none;
+      background: #c62828;
+      color: white;
+      border: 0;
+      padding: 11px 20px;
+      border-radius: 10px;
+      font-weight: 800;
+      cursor: pointer;
+      box-shadow: 0 3px 10px #0002;
+    }
+
+    /* MEMBER & POST BUTTONS */
+
+    .extra-links {
+      text-align: center;
+      padding: 18px 10px;
+      background: #e5f3eb;
+    }
+
+    .extra-links a {
+      display: inline-block;
+      color: white;
+      padding: 14px 24px;
+      border-radius: 12px;
+      text-decoration: none;
+      font-weight: 900;
+      margin: 6px;
+      box-shadow: 0 5px 12px #0002;
+      transition: 0.3s;
+    }
+
+    .extra-links a:first-child {
+      background: linear-gradient(135deg, #087f5b, #13a374);
+    }
+
+    .extra-links a:last-child {
+      background: linear-gradient(135deg, #176b3a, #258b50);
+    }
+
+    .extra-links a:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 18px #0003;
+    }
+
+    /* HERO */
+
     .hero {
       text-align: center;
-      padding: 75px 20px;
-      background: linear-gradient(135deg, #075c3b, #159765);
+      padding: 85px 20px;
+      background: linear-gradient(135deg, #075c3b, #159765, #08764b);
       color: white;
+      position: relative;
+      overflow: hidden;
     }
 
     .welcome {
       display: inline-block;
-      padding: 7px 18px;
+      padding: 9px 20px;
       border: 1px solid #ffffff80;
-      border-radius: 30px;
-      margin-bottom: 18px;
-      font-size: 14px;
+      border-radius: 40px;
+      margin-bottom: 20px;
+      font-size: 15px;
+      font-weight: 800;
+      background: #ffffff12;
     }
 
     .hero h1 {
-      font-size: 34px;
-      margin-bottom: 15px;
+      font-size: 38px;
+      margin-bottom: 18px;
+      font-weight: 900;
+      line-height: 1.5;
     }
 
     .hero p {
-      font-size: 17px;
-      margin-bottom: 25px;
+      font-size: 18px;
+      margin-bottom: 28px;
+      font-weight: 800;
     }
 
     .btn {
       display: inline-block;
-      padding: 11px 24px;
-      border-radius: 7px;
+      padding: 13px 25px;
+      border-radius: 11px;
       background: #f5c542;
       color: #18352a;
       text-decoration: none;
-      font-weight: bold;
-      margin: 5px;
+      font-weight: 900;
+      margin: 7px;
+      box-shadow: 0 4px 12px #0002;
+      transition: 0.3s;
     }
 
     .btn:hover {
       background: #ffdb69;
+      transform: translateY(-3px);
     }
 
+    /* GENERAL SECTIONS */
+
     section {
-      padding: 45px 7%;
+      padding: 55px 7%;
       text-align: center;
     }
 
     section h2 {
       color: #075c3b;
-      margin-bottom: 15px;
+      margin-bottom: 22px;
+      font-size: 29px;
+      font-weight: 900;
     }
 
+    /* MEMBERS */
+
     .member-section {
-      background: #e5f3eb;
+      background: linear-gradient(135deg, #e5f3eb, #f3fff8);
+      border-bottom: 1px solid #d1e8d9;
     }
 
     .member-number {
-      font-size: 30px;
-      font-weight: bold;
+      font-size: 42px;
+      font-weight: 900;
       color: #08764b;
+      margin: 5px 0;
     }
 
-    /* =========================
-       আধুনিক নোটিশ বোর্ড
-    ========================= */
+    #memberUnit {
+      font-weight: 800;
+      font-size: 17px;
+    }
+
+    /* NOTICE BOARD */
 
     .notice-section {
-      padding: 45px 7%;
+      padding: 55px 7%;
       background: linear-gradient(135deg, #fffdf4, #fff4d5);
     }
 
     .notice-section h2 {
       color: #805c08;
-      font-size: 28px;
-      margin-bottom: 25px;
+      font-size: 30px;
+      margin-bottom: 28px;
+      font-weight: 900;
     }
 
     #homeNotices {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 20px;
+      gap: 22px;
       max-width: 1100px;
       margin: 0 auto;
       text-align: left;
@@ -205,34 +296,35 @@
 
     .notice-card {
       position: relative;
-      background: #ffffff;
-      padding: 22px;
-      border-radius: 15px;
+      background: white;
+      padding: 24px;
+      border-radius: 16px;
       border: 1px solid #f0e1b1;
-      border-left: 5px solid #159765;
-      box-shadow: 0 5px 15px rgba(80, 60, 0, 0.07);
+      border-left: 6px solid #159765;
+      box-shadow: 0 5px 18px rgba(80, 60, 0, 0.08);
       transition: transform 0.25s ease, box-shadow 0.25s ease;
       overflow: hidden;
     }
 
     .notice-card:hover {
       transform: translateY(-5px);
-      box-shadow: 0 10px 24px rgba(80, 60, 0, 0.12);
+      box-shadow: 0 12px 25px rgba(80, 60, 0, 0.14);
     }
 
     .notice-card h3 {
       color: #075c3b;
-      font-size: 19px;
-      font-weight: bold;
-      margin: 10px 0 12px;
-      line-height: 1.5;
+      font-size: 20px;
+      font-weight: 900;
+      margin: 12px 0;
+      line-height: 1.6;
       word-break: break-word;
     }
 
     .notice-card p {
       color: #354b40;
-      font-size: 15px;
+      font-size: 16px;
       line-height: 1.9;
+      font-weight: 800;
       white-space: pre-wrap;
       overflow-wrap: anywhere;
     }
@@ -247,22 +339,22 @@
 
     .notice-label {
       display: inline-block;
-      padding: 4px 12px;
+      padding: 5px 13px;
       border-radius: 30px;
       background: #e6f7ed;
       color: #08764b;
-      font-size: 12px;
-      font-weight: bold;
+      font-size: 13px;
+      font-weight: 900;
     }
 
     .notice-new {
       display: inline-block;
-      padding: 4px 11px;
+      padding: 5px 12px;
       border-radius: 30px;
       background: #e53935;
-      color: #ffffff;
-      font-size: 11px;
-      font-weight: bold;
+      color: white;
+      font-size: 12px;
+      font-weight: 900;
       letter-spacing: 0.5px;
       animation: noticePulse 1.8s infinite;
     }
@@ -271,19 +363,21 @@
       display: block;
       color: #8a7542;
       border-top: 1px solid #f3e8c9;
-      margin-top: 17px;
-      padding-top: 12px;
-      font-size: 13px;
+      margin-top: 18px;
+      padding-top: 13px;
+      font-size: 14px;
+      font-weight: 800;
     }
 
     .notice-empty {
       grid-column: 1 / -1;
-      background: #ffffff;
+      background: white;
       border: 1px dashed #d8bd72;
       border-radius: 14px;
       padding: 25px 15px;
       color: #79642b;
       text-align: center;
+      font-weight: 800;
     }
 
     @keyframes noticePulse {
@@ -295,147 +389,156 @@
       }
     }
 
-    /* ========================= */
+    /* ABOUT */
+
+    #about {
+      background: #ffffff;
+    }
+
+    #aboutText {
+      max-width: 900px;
+      margin: 0 auto;
+      font-size: 18px;
+      line-height: 2;
+      font-weight: 900;
+      color: #294438;
+      background: #f1faf4;
+      border-left: 5px solid #159765;
+      padding: 25px;
+      border-radius: 15px;
+      box-shadow: 0 4px 15px #00000008;
+    }
+
+    /* ACTIVITIES */
+
+    #services {
+      background: linear-gradient(135deg, #f3f8f5, #e8f5ed);
+    }
 
     .cards {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
-      gap: 18px;
-      margin-top: 25px;
+      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+      gap: 22px;
+      margin-top: 30px;
     }
 
     .card {
       background: white;
-      padding: 30px 22px;
-      border-radius: 12px;
-      box-shadow: 0 3px 12px #00000012;
-      min-height: 170px;
+      padding: 32px 24px;
+      border-radius: 18px;
+      box-shadow: 0 5px 18px #00000010;
+      min-height: 200px;
+      border-bottom: 5px solid #159765;
+      transition: 0.3s;
+    }
+
+    .card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 12px 25px #00000018;
     }
 
     .card h3 {
       color: #08764b;
-      margin-bottom: 12px;
-      font-size: 21px;
+      margin-bottom: 15px;
+      font-size: 22px;
+      font-weight: 900;
     }
+
+    /* এই অংশে তিনটি কার্যক্রমের লেখাই মোটা করা হয়েছে */
 
     .card p {
       color: #18352a;
-      font-size: 15px;
+      font-size: 17px;
+      font-weight: 900;
+      line-height: 2;
       margin: 0;
     }
 
+    /* CONTACT */
+
     .contact-section {
-      background: #e5f3eb;
+      background: linear-gradient(135deg, #e5f3eb, #f5fff9);
     }
+
+    #contactOrgName {
+      font-size: 19px;
+      font-weight: 900;
+      color: #075c3b;
+      margin-bottom: 8px;
+    }
+
+    #contactInfo {
+      font-size: 16px;
+      font-weight: 800;
+    }
+
+    /* FOOTER */
 
     footer {
-      background: #063e2b;
+      background: linear-gradient(135deg, #063e2b, #075c3b);
       color: white;
       text-align: center;
-      padding: 22px;
+      padding: 30px 18px;
+      font-weight: 800;
     }
 
-    /* সদস্য তালিকা ও পোস্ট বাটন */
-
-    .extra-links {
-      text-align: center;
-      padding: 15px 10px;
-      background: #e5f3eb;
+    #footerText {
+      font-weight: 900;
     }
-
-    .extra-links a {
-      display: inline-block;
-      color: white;
-      padding: 13px 22px;
-      border-radius: 10px;
-      text-decoration: none;
-      font-weight: bold;
-      margin: 6px;
-      box-shadow: 0 3px 8px #0002;
-      transition: 0.3s;
-    }
-
-    .extra-links a:first-child {
-      background: #087f5b;
-    }
-
-    .extra-links a:last-child {
-      background: #176b3a;
-    }
-
-    .extra-links a:hover {
-      transform: translateY(-2px);
-      opacity: 0.9;
-    }
-
-    #homeLogoutArea {
-      text-align: right;
-      padding: 10px 6%;
-    }
-
-    #homeLogoutBtn {
-      display: none;
-      background: #b83232;
-      color: white;
-      border: 0;
-      padding: 10px 18px;
-      border-radius: 7px;
-      font-weight: bold;
-      cursor: pointer;
-    }
-
-    /* ক্রিয়েটর পরিচিতি */
 
     .creator-credit {
       text-align: center;
-      padding: 20px 10px;
+      padding: 22px 10px;
       margin-top: 10px;
     }
 
     .creator-credit p {
       color: #f5c542;
       font-size: 14px;
+      font-weight: 900;
       letter-spacing: 2px;
       margin-bottom: 8px;
     }
 
     .creator-credit h3 {
       color: white;
-      font-size: 22px;
-      font-weight: bold;
+      font-size: 24px;
+      font-weight: 900;
       margin: 8px 0;
     }
 
     .creator-credit span {
       color: #c8e6d5;
-      font-size: 13px;
+      font-size: 14px;
       letter-spacing: 1px;
+      font-weight: 800;
     }
 
-    /* মোবাইল ডিজাইন */
+    /* MOBILE */
 
     @media (max-width: 600px) {
+
       header {
         flex-direction: column;
         justify-content: center;
         text-align: center;
-        padding: 15px 12px;
+        padding: 16px 12px;
       }
 
       .brand {
         flex-direction: column;
         justify-content: center;
-        gap: 8px;
+        gap: 9px;
         width: 100%;
       }
 
       .logo {
-        width: 85px;
-        height: 85px;
+        width: 90px;
+        height: 90px;
       }
 
       header h2 {
-        font-size: 21px;
+        font-size: 22px;
       }
 
       .motto {
@@ -444,7 +547,7 @@
 
       nav {
         justify-content: center;
-        gap: 12px;
+        gap: 13px;
         width: 100%;
       }
 
@@ -453,51 +556,103 @@
       }
 
       .extra-links {
-        padding: 12px 8px;
+        padding: 14px 8px;
       }
 
       .extra-links a {
         display: block;
         width: 100%;
-        max-width: 320px;
-        margin: 8px auto;
+        max-width: 330px;
+        margin: 9px auto;
       }
 
       .hero {
-        padding: 45px 15px;
+        padding: 50px 15px;
       }
 
       .hero h1 {
-        font-size: 26px;
+        font-size: 28px;
       }
 
       .hero p {
-        font-size: 15px;
+        font-size: 16px;
+        font-weight: 900;
+      }
+
+      .welcome {
+        font-size: 13px;
+      }
+
+      .btn {
+        display: block;
+        width: 100%;
+        max-width: 340px;
+        margin: 10px auto;
+      }
+
+      .member-number {
+        font-size: 38px;
+      }
+
+      section {
+        padding: 40px 6%;
+      }
+
+      section h2 {
+        font-size: 25px;
+      }
+
+      #aboutText {
+        font-size: 16px;
+        padding: 20px 15px;
       }
 
       .cards {
         grid-template-columns: 1fr;
+        gap: 16px;
       }
 
-      section {
-        padding: 35px 6%;
+      .card {
+        padding: 28px 20px;
+      }
+
+      .card h3 {
+        font-size: 21px;
+      }
+
+      .card p {
+        font-size: 17px;
+        font-weight: 900;
       }
 
       .notice-section {
-        padding: 35px 6%;
+        padding: 40px 6%;
       }
 
       .notice-section h2 {
-        font-size: 23px;
+        font-size: 25px;
       }
 
       #homeNotices {
         grid-template-columns: 1fr;
-        gap: 15px;
+        gap: 16px;
       }
 
       .notice-card {
-        padding: 18px;
+        padding: 20px;
+      }
+
+      .notice-card h3 {
+        font-size: 19px;
+      }
+
+      .notice-card p {
+        font-size: 15px;
+        font-weight: 800;
+      }
+
+      #homeLogoutArea {
+        text-align: center;
       }
     }
   </style>
@@ -602,7 +757,7 @@
 
   <h2 id="aboutHeading">আমাদের সম্পর্কে</h2>
 
-  <p id="aboutText" style="font-weight: bold;">
+  <p id="aboutText">
     পূর্ব আতাকরা সমাজ কল্যাণ একটি সামাজিক উদ্যোগ।
     সমাজের মানুষের মধ্যে ঐক্য, সহযোগিতা ও কল্যাণমূলক
     কার্যক্রমকে এগিয়ে নেওয়াই আমাদের লক্ষ্য।
@@ -617,17 +772,17 @@
   <div class="cards">
 
     <div class="card">
-      <h3 id="service1Title">সদস্য ব্যবস্থাপনা</h3>
+      <h3 id="service1Title">👥 সদস্য ব্যবস্থাপনা</h3>
       <p id="service1Text">সদস্যদের তথ্য সংরক্ষণ ও পরিচালনা।</p>
     </div>
 
     <div class="card">
-      <h3 id="service2Title">সামাজিক সহযোগিতা</h3>
+      <h3 id="service2Title">🤝 সামাজিক সহযোগিতা</h3>
       <p id="service2Text">সমাজের মানুষের পাশে দাঁড়ানো।</p>
     </div>
 
     <div class="card">
-      <h3 id="service3Title">মানবসেবা</h3>
+      <h3 id="service3Title">💚 মানবসেবা</h3>
       <p id="service3Text">মানবিক ও কল্যাণমূলক কাজে অংশগ্রহণ।</p>
     </div>
 
@@ -646,6 +801,7 @@
 </section>
 
 <footer>
+
   <p id="footerText">
     © 2026 পূর্ব আতাকরা সমাজ কল্যাণ। সর্বস্বত্ব সংরক্ষিত।
   </p>
@@ -655,15 +811,18 @@
     <h3>Abu Bokkar Siddik</h3>
     <span>Web Developer | Creative Designer</span>
   </div>
+
 </footer>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="supabase-config.js"></script>
 
 <script>
+
 let currentHomeLanguage = "bn";
 
 const homeTranslations = {
+
   bn: {
     orgName: "পূর্ব আতাকরা সমাজ কল্যাণ",
     motto: "ঐক্য • সহযোগিতা • মানবসেবা",
@@ -685,11 +844,11 @@ const homeTranslations = {
     aboutHeading: "আমাদের সম্পর্কে",
     aboutText: "পূর্ব আতাকরা সমাজ কল্যাণ একটি সামাজিক উদ্যোগ। সমাজের মানুষের মধ্যে ঐক্য, সহযোগিতা ও কল্যাণমূলক কার্যক্রমকে এগিয়ে নেওয়াই আমাদের লক্ষ্য।",
     servicesHeading: "আমাদের কার্যক্রম",
-    service1Title: "সদস্য ব্যবস্থাপনা",
+    service1Title: "👥 সদস্য ব্যবস্থাপনা",
     service1Text: "সদস্যদের তথ্য সংরক্ষণ ও পরিচালনা।",
-    service2Title: "সামাজিক সহযোগিতা",
+    service2Title: "🤝 সামাজিক সহযোগিতা",
     service2Text: "সমাজের মানুষের পাশে দাঁড়ানো।",
-    service3Title: "মানবসেবা",
+    service3Title: "💚 মানবসেবা",
     service3Text: "মানবিক ও কল্যাণমূলক কাজে অংশগ্রহণ।",
     contactHeading: "যোগাযোগ",
     contactOrgName: "পূর্ব আতাকরা সমাজ কল্যাণ",
@@ -729,11 +888,11 @@ const homeTranslations = {
     aboutHeading: "About Us",
     aboutText: "Purbo Atakora Social Welfare is a social initiative. Our goal is to promote unity, cooperation and welfare activities among community members.",
     servicesHeading: "Our Activities",
-    service1Title: "Member Management",
+    service1Title: "👥 Member Management",
     service1Text: "Maintaining and managing member information.",
-    service2Title: "Social Cooperation",
+    service2Title: "🤝 Social Cooperation",
     service2Text: "Standing beside the people in our community.",
-    service3Title: "Humanitarian Service",
+    service3Title: "💚 Humanitarian Service",
     service3Text: "Participating in humanitarian and welfare activities.",
     contactHeading: "Contact",
     contactOrgName: "Purbo Atakora Social Welfare",
@@ -751,9 +910,11 @@ const homeTranslations = {
     newNotice: "NEW",
     noticeDateLabel: "Published"
   }
+
 };
 
 function setLanguage(lang) {
+
   const translations = homeTranslations[lang];
 
   if (!translations) return;
@@ -762,17 +923,22 @@ function setLanguage(lang) {
   document.documentElement.lang = lang;
 
   Object.keys(translations).forEach(id => {
+
     const element = document.getElementById(id);
 
     if (element) {
       element.textContent = translations[id];
     }
+
   });
 
   loadHomeNotices();
 }
 
+/* MEMBERS COUNT */
+
 async function loadTotalMembers() {
+
   const display = document.getElementById("totalMembers");
 
   const { count, error } = await supabaseClient
@@ -789,7 +955,10 @@ async function loadTotalMembers() {
   display.textContent = count ?? 0;
 }
 
+/* LOGIN CHECK */
+
 async function checkHomeLogin() {
+
   const { data } = await supabaseClient.auth.getSession();
 
   const logoutBtn = document.getElementById("homeLogoutBtn");
@@ -801,7 +970,10 @@ async function checkHomeLogin() {
   }
 }
 
+/* LOGOUT */
+
 document.getElementById("homeLogoutBtn").addEventListener("click", async () => {
+
   const { error } = await supabaseClient.auth.signOut();
 
   if (error) {
@@ -811,9 +983,13 @@ document.getElementById("homeLogoutBtn").addEventListener("click", async () => {
 
   alert("সফলভাবে লগআউট হয়েছে।");
   window.location.href = "login.html";
+
 });
 
+/* NOTICE BOARD */
+
 async function loadHomeNotices() {
+
   const noticeBox = document.getElementById("homeNotices");
   const t = homeTranslations[currentHomeLanguage];
 
@@ -834,14 +1010,17 @@ async function loadHomeNotices() {
   noticeBox.replaceChildren();
 
   if (!data || data.length === 0) {
+
     const empty = document.createElement("div");
     empty.className = "notice-empty";
     empty.textContent = t.noNotices;
     noticeBox.appendChild(empty);
+
     return;
   }
 
   data.forEach(notice => {
+
     const card = document.createElement("div");
     card.className = "notice-card";
 
@@ -854,11 +1033,14 @@ async function loadHomeNotices() {
 
     top.appendChild(label);
 
-    // গত ৭ দিনের নোটিশে NEW/নতুন ব্যাজ
+    /* NEW BADGE - 7 DAYS */
+
     const noticeTime = new Date(notice.created_at).getTime();
     const sevenDays = 7 * 24 * 60 * 60 * 1000;
-    const isNew = (Date.now() - noticeTime) <= sevenDays &&
-                  (Date.now() - noticeTime) >= 0;
+
+    const isNew =
+      (Date.now() - noticeTime) <= sevenDays &&
+      (Date.now() - noticeTime) >= 0;
 
     if (isNew) {
       const newBadge = document.createElement("span");
@@ -889,12 +1071,17 @@ async function loadHomeNotices() {
 
     card.append(top, title, content, date);
     noticeBox.appendChild(card);
+
   });
+
 }
+
+/* START */
 
 loadTotalMembers();
 checkHomeLogin();
 loadHomeNotices();
+
 </script>
 
 </body>
