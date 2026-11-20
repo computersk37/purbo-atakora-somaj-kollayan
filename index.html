@@ -7,19 +7,20 @@
 
   <title>পূর্ব আতাকরা সমাজ কল্যাণ</title>
   <meta name="description" content="পূর্ব আতাকরা সমাজ কল্যাণ একটি সামাজিক সংগঠন। আমাদের লক্ষ্য সমাজের মানুষের মধ্যে ঐক্য, সহযোগিতা, মানবিক সহায়তা ও কল্যাণমূলক কার্যক্রম এগিয়ে নেওয়া। আমাদের ওয়েবসাইট থেকে সরাসরি সদস্য হওয়ার আবেদন করুন।">
-<link rel="canonical" href="https://computersk37.github.io/purbo-atakora-somaj-kollayan/">
-<meta name="keywords" content="পূর্ব আতাকরা সমাজ কল্যাণ, পূর্ব আতাকরা, সমাজ কল্যাণ, সামাজিক সংগঠন, সদস্য নিবন্ধন">
+  <link rel="canonical" href="https://computersk37.github.io/purbo-atakora-somaj-kollayan/">
+  <meta name="keywords" content="পূর্ব আতাকরা সমাজ কল্যাণ, পূর্ব আতাকরা, সমাজ কল্যাণ, সামাজিক সংগঠন, সদস্য নিবন্ধন">
+  <meta name="robots" content="index, follow">
 
-<meta name="robots" content="index, follow">
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "WebSite",
-  "name": "পূর্ব আতাকরা সমাজ কল্যাণ",
-  "alternateName": "Purbo Atakora Samaj Kallyan",
-  "url": "https://computersk37.github.io/purbo-atakora-somaj-kollayan/"
-}
-</script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "পূর্ব আতাকরা সমাজ কল্যাণ",
+    "alternateName": "Purbo Atakora Samaj Kallyan",
+    "url": "https://computersk37.github.io/purbo-atakora-somaj-kollayan/"
+  }
+  </script>
+
   <!-- Organization Structured Data -->
   <script type="application/ld+json">
   {
@@ -31,6 +32,7 @@
     "logo": "https://computersk37.github.io/purbo-atakora-somaj-kollayan/file_00000000efe88211984c7a7fee7e28c5.png"
   }
   </script>
+
   <style>
     * {
       box-sizing: border-box;
@@ -177,27 +179,123 @@
       color: #08764b;
     }
 
+    /* =========================
+       আধুনিক নোটিশ বোর্ড
+    ========================= */
+
     .notice-section {
-      background: #fff8df;
+      padding: 45px 7%;
+      background: linear-gradient(135deg, #fffdf4, #fff4d5);
     }
 
     .notice-section h2 {
-      color: #8a6500;
+      color: #805c08;
+      font-size: 28px;
+      margin-bottom: 25px;
+    }
+
+    #homeNotices {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 20px;
+      max-width: 1100px;
+      margin: 0 auto;
+      text-align: left;
     }
 
     .notice-card {
-      background: white;
-      padding: 18px;
-      border-radius: 10px;
-      margin: 12px 0;
-      text-align: left;
-      box-shadow: 0 3px 12px #00000010;
+      position: relative;
+      background: #ffffff;
+      padding: 22px;
+      border-radius: 15px;
+      border: 1px solid #f0e1b1;
+      border-left: 5px solid #159765;
+      box-shadow: 0 5px 15px rgba(80, 60, 0, 0.07);
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+      overflow: hidden;
+    }
+
+    .notice-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 24px rgba(80, 60, 0, 0.12);
     }
 
     .notice-card h3 {
-      color: #08764b;
-      margin-bottom: 8px;
+      color: #075c3b;
+      font-size: 19px;
+      font-weight: bold;
+      margin: 10px 0 12px;
+      line-height: 1.5;
+      word-break: break-word;
     }
+
+    .notice-card p {
+      color: #354b40;
+      font-size: 15px;
+      line-height: 1.9;
+      white-space: pre-wrap;
+      overflow-wrap: anywhere;
+    }
+
+    .notice-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .notice-label {
+      display: inline-block;
+      padding: 4px 12px;
+      border-radius: 30px;
+      background: #e6f7ed;
+      color: #08764b;
+      font-size: 12px;
+      font-weight: bold;
+    }
+
+    .notice-new {
+      display: inline-block;
+      padding: 4px 11px;
+      border-radius: 30px;
+      background: #e53935;
+      color: #ffffff;
+      font-size: 11px;
+      font-weight: bold;
+      letter-spacing: 0.5px;
+      animation: noticePulse 1.8s infinite;
+    }
+
+    .notice-date {
+      display: block;
+      color: #8a7542;
+      border-top: 1px solid #f3e8c9;
+      margin-top: 17px;
+      padding-top: 12px;
+      font-size: 13px;
+    }
+
+    .notice-empty {
+      grid-column: 1 / -1;
+      background: #ffffff;
+      border: 1px dashed #d8bd72;
+      border-radius: 14px;
+      padding: 25px 15px;
+      color: #79642b;
+      text-align: center;
+    }
+
+    @keyframes noticePulse {
+      0%, 100% {
+        opacity: 1;
+      }
+      50% {
+        opacity: 0.7;
+      }
+    }
+
+    /* ========================= */
 
     .cards {
       display: grid;
@@ -237,7 +335,8 @@
       padding: 22px;
     }
 
-    /* উপরে সদস্য তালিকা ও পোস্ট বাটন */
+    /* সদস্য তালিকা ও পোস্ট বাটন */
+
     .extra-links {
       text-align: center;
       padding: 15px 10px;
@@ -286,6 +385,7 @@
     }
 
     /* ক্রিয়েটর পরিচিতি */
+
     .creator-credit {
       text-align: center;
       padding: 20px 10px;
@@ -313,6 +413,7 @@
     }
 
     /* মোবাইল ডিজাইন */
+
     @media (max-width: 600px) {
       header {
         flex-direction: column;
@@ -381,6 +482,23 @@
       section {
         padding: 35px 6%;
       }
+
+      .notice-section {
+        padding: 35px 6%;
+      }
+
+      .notice-section h2 {
+        font-size: 23px;
+      }
+
+      #homeNotices {
+        grid-template-columns: 1fr;
+        gap: 15px;
+      }
+
+      .notice-card {
+        padding: 18px;
+      }
     }
   </style>
 </head>
@@ -418,7 +536,6 @@
   <button id="homeLogoutBtn">লগআউট</button>
 </div>
 
-<!-- সদস্য তালিকা ও পোস্ট বাটন এখন উপরে -->
 <div class="extra-links">
 
   <a id="membersLink" href="members.html">
@@ -486,10 +603,10 @@
   <h2 id="aboutHeading">আমাদের সম্পর্কে</h2>
 
   <p id="aboutText" style="font-weight: bold;">
-  পূর্ব আতাকরা সমাজ কল্যাণ একটি সামাজিক উদ্যোগ।
-  সমাজের মানুষের মধ্যে ঐক্য, সহযোগিতা ও কল্যাণমূলক
-  কার্যক্রমকে এগিয়ে নেওয়াই আমাদের লক্ষ্য।
-</p>
+    পূর্ব আতাকরা সমাজ কল্যাণ একটি সামাজিক উদ্যোগ।
+    সমাজের মানুষের মধ্যে ঐক্য, সহযোগিতা ও কল্যাণমূলক
+    কার্যক্রমকে এগিয়ে নেওয়াই আমাদের লক্ষ্য।
+  </p>
 
 </section>
 
@@ -585,7 +702,10 @@ const homeTranslations = {
     noticeLoading: "নোটিশ লোড হচ্ছে...",
     noNotices: "বর্তমানে কোনো নোটিশ নেই।",
     noticeError: "নোটিশ লোড করা যায়নি।",
-    memberError: "লোড হয়নি"
+    memberError: "লোড হয়নি",
+    noticeLabel: "📢 ঘোষণা",
+    newNotice: "নতুন",
+    noticeDateLabel: "প্রকাশিত"
   },
 
   en: {
@@ -626,7 +746,10 @@ const homeTranslations = {
     noticeLoading: "Loading notices...",
     noNotices: "There are currently no notices.",
     noticeError: "Unable to load notices.",
-    memberError: "Could not load"
+    memberError: "Could not load",
+    noticeLabel: "📢 Announcement",
+    newNotice: "NEW",
+    noticeDateLabel: "Published"
   }
 };
 
@@ -711,13 +834,38 @@ async function loadHomeNotices() {
   noticeBox.replaceChildren();
 
   if (!data || data.length === 0) {
-    noticeBox.textContent = t.noNotices;
+    const empty = document.createElement("div");
+    empty.className = "notice-empty";
+    empty.textContent = t.noNotices;
+    noticeBox.appendChild(empty);
     return;
   }
 
   data.forEach(notice => {
     const card = document.createElement("div");
     card.className = "notice-card";
+
+    const top = document.createElement("div");
+    top.className = "notice-top";
+
+    const label = document.createElement("span");
+    label.className = "notice-label";
+    label.textContent = t.noticeLabel;
+
+    top.appendChild(label);
+
+    // গত ৭ দিনের নোটিশে NEW/নতুন ব্যাজ
+    const noticeTime = new Date(notice.created_at).getTime();
+    const sevenDays = 7 * 24 * 60 * 60 * 1000;
+    const isNew = (Date.now() - noticeTime) <= sevenDays &&
+                  (Date.now() - noticeTime) >= 0;
+
+    if (isNew) {
+      const newBadge = document.createElement("span");
+      newBadge.className = "notice-new";
+      newBadge.textContent = t.newNotice;
+      top.appendChild(newBadge);
+    }
 
     const title = document.createElement("h3");
     title.textContent = notice.title;
@@ -726,11 +874,20 @@ async function loadHomeNotices() {
     content.textContent = notice.content;
 
     const date = document.createElement("small");
-    date.textContent = new Date(notice.created_at).toLocaleDateString(
-      currentHomeLanguage === "en" ? "en-US" : "bn-BD"
+    date.className = "notice-date";
+
+    const formattedDate = new Date(notice.created_at).toLocaleDateString(
+      currentHomeLanguage === "en" ? "en-US" : "bn-BD",
+      {
+        year: "numeric",
+        month: "long",
+        day: "numeric"
+      }
     );
 
-    card.append(title, content, date);
+    date.textContent = t.noticeDateLabel + ": " + formattedDate;
+
+    card.append(top, title, content, date);
     noticeBox.appendChild(card);
   });
 }
@@ -741,4 +898,4 @@ loadHomeNotices();
 </script>
 
 </body>
-</html>
+  </html>
